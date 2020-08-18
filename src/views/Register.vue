@@ -1,15 +1,192 @@
 <template>
-  <div>
-    <h1>Register page</h1>
+  <div class="wrapper">
+    <div class="card">
+      <h1>Sign up</h1>
+      <p class="sub-header">To be able to make projects.</p>
+      <form @submit.prevent="registerSubmit">
+        <div class="error" v-if="errors && errors.non_field">{{ errors.non_field }}</div>
+        <div class="error" v-if="errors && errors.displayName">{{ errors.displayName }}</div>
+        <div class="form-group">
+          <label>Display name</label>
+          <input type="text" v-model="displayName" placeholder="i.e. John Smith" required />
+        </div>
+        <div class="error" v-if="errors && errors.email">{{ errors.email }}</div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" v-model="email" placeholder="i.e. john@example.com" required />
+        </div>
+        <div class="error" v-if="errors && errors.password">{{ errors.password }}</div>
+        <div class="form-group">
+          <label>Password</label>
+          <input
+            type="password"
+            v-model="password"
+            placeholder="Must be at least 6 characters"
+            required
+          />
+        </div>
+        <input type="submit" value="Sign Up" :disabled="authenticating" />
+        <div class="divider"></div>
+        <p class="or">OR</p>
+      </form>
+      <button @click="registerClick" :disabled="authenticating">
+        <span>
+          <i class="fab fa-google"></i>
+        </span> Sign Up with Google
+      </button>
+      <div class="divider"></div>
+      <p class="bottom-text">
+        Already have an account?
+        <router-link to="/login">Login</router-link>
+      </p>
+    </div>
   </div>
 </template>
 
 <script>
+import { mapActions, mapGetters } from "vuex";
+
 export default {
-  name: 'Register',
-}
+  name: "Register",
+  data() {
+    return {
+      displayName: "",
+      email: "",
+      password: "",
+    };
+  },
+  computed: {
+    ...mapGetters({
+      authenticating: "auth/authenticating",
+      errors: "auth/errors",
+    }),
+  },
+  mounted() {
+    this.clearErrors();
+  },
+  methods: {
+    ...mapActions({
+      basicRegister: "auth/basicRegister",
+      googleSignIn: "auth/googleSignIn",
+      clearErrors: "auth/clearErrors",
+    }),
+    registerSubmit() {
+      this.basicRegister({
+        displayName: this.displayName,
+        email: this.email,
+        password: this.password,
+        clearForm: this.clearForm,
+      });
+    },
+    registerClick() {
+      this.googleSignIn(this.clearForm);
+    },
+    clearForm() {
+      this.displayName = "";
+      this.email = "";
+      this.password = "";
+    },
+  },
+};
 </script>
 
 <style scoped>
-@import '../assets/style.css';
+@import "../assets/style.css";
+
+.wrapper {
+  min-height: 100vh;
+  padding-top: var(--spaceTop);
+  padding-bottom: var(--space2);
+}
+
+.card {
+  border: 1px solid var(--borderColor);
+  padding: var(--space2);
+  max-width: 400px;
+  margin: 0 auto;
+  border-radius: var(--round);
+}
+
+.error {
+  margin-bottom: var(--spacehalf);
+}
+
+form {
+  width: 100%;
+}
+
+input:not([type="submit"]) {
+  margin-top: var(--spacehalf);
+  margin-bottom: var(--space1);
+  padding: var(--spacehalf);
+  border-radius: var(--round);
+  border: 1px solid var(--borderColor);
+}
+
+input:not([type="submit"]):focus {
+  border: 1px solid var(--primary);
+}
+
+input:not([type="submit"])::placeholder {
+  font-size: var(--sizeSm);
+  color: var(--borderColor);
+}
+
+input[type="submit"],
+button {
+  width: 100%;
+  padding: var(--spacehalf);
+  border-radius: var(--round);
+  text-transform: uppercase;
+}
+
+input[type="submit"] {
+  background: var(--primary);
+  color: var(--light);
+}
+
+input[type="submit"]:disabled {
+  background: var(--primaryLight);
+}
+
+.divider {
+  height: 1px;
+  margin: var(--space2) 0;
+  background: var(--borderColor);
+}
+
+button {
+  padding: var(--space1);
+  background: var(--google);
+  color: var(--light);
+}
+
+button:disabled {
+  background: var(--googleLight);
+}
+
+button span {
+  margin-right: var(--space1);
+}
+
+h1 {
+  margin-bottom: var(--spacehalf);
+  font-weight: 400;
+}
+
+.sub-header {
+  font-weight: 300;
+  margin-bottom: var(--space3);
+}
+
+.or {
+  margin-bottom: var(--space1);
+}
+
+h1,
+.sub-header,
+.bottom-text,
+.or {
+  text-align: center;
+}
 </style>

@@ -1,9 +1,67 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@700&display=swap');
+
 :root {
-  --bg-color: #333;
+  --heading: 'Oswald', sans-serif;
+  --shadow: 1px 0px 5px 0px rgba(0, 0, 0, 0.3);
+  --round: 3px;
+  --light: #fff;
+  --primary: #63a5f9;
+  --primaryLight: #bdd7f9;
+  --error: #f11c1c;
+  --google: #dd493d;
+  --googleLight: #f5998e;
+  --borderColor: #c3bfcc;
+  --spacehalf: 0.5rem;
+  --space1: 1rem;
+  --space2: 2rem;
+  --space3: 3rem;
+  --spaceTop: 8rem;
+  --sizeLg: 3rem;
+  --sizeSm: 0.8rem;
 }
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.container {
+  padding: 0 var(--space2);
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+input:focus,
+button:focus {
+  outline: none;
+}
+
+input:not([type='submit']) {
+  border: none;
+  width: 100%;
+  display: block;
+  font-size: 1rem;
+}
+
+button,
+input[type='submit'] {
+  border: none;
+  font-size: 1rem;
+  /* font-weight: 700; */
+  cursor: pointer;
+}
+
+a {
+  color: var(--primary);
+}
+
+.error {
+  color: var(--error);
+  border: 1px solid var(--error);
+  padding: var(--spacehalf);
+  border-radius: var(--round);
+  font-size: var(--sizeSm);
 }
