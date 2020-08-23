@@ -6,17 +6,17 @@
       <form @submit.prevent="registerSubmit">
         <div class="error" v-if="errors && errors.non_field">{{ errors.non_field }}</div>
         <div class="error" v-if="errors && errors.displayName">{{ errors.displayName }}</div>
-        <div class="form-group">
+        <div>
           <label>Display name</label>
           <input type="text" v-model="displayName" placeholder="i.e. John Smith" required />
         </div>
         <div class="error" v-if="errors && errors.email">{{ errors.email }}</div>
-        <div class="form-group">
+        <div>
           <label>Email</label>
           <input type="email" v-model="email" placeholder="i.e. john@example.com" required />
         </div>
         <div class="error" v-if="errors && errors.password">{{ errors.password }}</div>
-        <div class="form-group">
+        <div>
           <label>Password</label>
           <input
             type="password"
@@ -111,48 +111,10 @@ export default {
   margin-bottom: var(--spacehalf);
 }
 
-form {
-  width: 100%;
-}
-
-input:not([type="submit"]) {
-  margin-top: var(--spacehalf);
-  margin-bottom: var(--space1);
-  padding: var(--spacehalf);
-  border-radius: var(--round);
-  border: 1px solid var(--borderColor);
-}
-
-input:not([type="submit"]):focus {
-  border: 1px solid var(--primary);
-}
-
-input:not([type="submit"])::placeholder {
-  font-size: var(--sizeSm);
-  color: var(--borderColor);
-}
-
 input[type="submit"],
 button {
   width: 100%;
   padding: var(--spacehalf);
-  border-radius: var(--round);
-  text-transform: uppercase;
-}
-
-input[type="submit"] {
-  background: var(--primary);
-  color: var(--light);
-}
-
-input[type="submit"]:disabled {
-  background: var(--primaryLight);
-}
-
-.divider {
-  height: 1px;
-  margin: var(--space2) 0;
-  background: var(--borderColor);
 }
 
 button {
@@ -171,7 +133,7 @@ button span {
 
 h1 {
   margin-bottom: var(--spacehalf);
-  font-weight: 400;
+  font-family: var(--heading);
 }
 
 .sub-header {

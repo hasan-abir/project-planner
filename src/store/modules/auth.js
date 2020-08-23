@@ -139,9 +139,10 @@ const actions = {
       commit('setErrors', { non_field: err.message })
     }
   },
-  async logOut({ commit }) {
+  async logOut({ commit, dispatch }) {
     await auth.signOut()
 
+    dispatch('project/clearProjects', null, { root: true })
     commit('logout', null)
     router.push('/login')
   },

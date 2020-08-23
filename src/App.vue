@@ -6,23 +6,23 @@
 </template>
 
 <script>
-import Navbar from "./components/Navbar";
-import { mapActions } from "vuex";
+import Navbar from '@/components/Navbar'
+import { mapActions } from 'vuex'
 
 export default {
-  name: "App",
+  name: 'App',
   components: {
     Navbar,
   },
   mounted() {
-    this.loadUser();
+    this.loadUser()
   },
   methods: {
     ...mapActions({
-      loadUser: "auth/loadUser",
+      loadUser: 'auth/loadUser',
     }),
   },
-};
+}
 </script>
 
 <style></style>

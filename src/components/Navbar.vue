@@ -58,14 +58,15 @@ export default {
 }
 
 .brand {
-  color: #000;
+  font-family: var(--heading);
+  color: var(--font);
   font-weight: 700;
   text-decoration: none;
 }
 
 .link {
   text-decoration: none;
-  color: #000;
+  color: var(--font);
   padding: var(--space1);
   display: inline-block;
   font-size: var(--sizeSm);
@@ -77,7 +78,7 @@ export default {
 }
 
 .container {
-  padding: var(--spacehalf);
+  padding: var(--spacehalf) var(--space2);
   display: flex;
   justify-content: space-between;
   align-items: center;
