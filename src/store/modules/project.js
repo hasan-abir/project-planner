@@ -1,7 +1,9 @@
 import * as firebase from 'firebase/app'
-import { db, auth } from '../../firebase'
+import { db } from '../../firebase'
 
 const state = {
+  fetchingCurrentProject: true,
+  currentProject: {},
   fetchingProjects: true,
   projects: [],
   creatingProject: false,
@@ -10,6 +12,8 @@ const state = {
 }
 
 const getters = {
+  fetchingCurrentProject: (state) => state.fetchingCurrentProject,
+  currentProject: (state) => state.currentProject,
   fetchingProjects: (state) => state.fetchingProjects,
   projects: (state) => state.projects,
   creatingProject: (state) => state.creatingProject,
@@ -18,6 +22,33 @@ const getters = {
 }
 
 const actions = {
+  async fetchCurrentProject({ commit, rootState }, projectId) {
+    try {
+      commit('fetchingCurrentProject', null)
+
+      const author = rootState.auth.user.userId
+
+      const projectRef = await db
+        .collection('users')
+        .doc(author)
+        .collection('projects')
+        .doc(projectId)
+        .get()
+
+      let project = {}
+
+      if (projectRef.exists) {
+        project = {
+          id: projectRef.id,
+          ...projectRef.data(),
+        }
+      }
+
+      commit('currentProjectFetched', project)
+    } catch (err) {
+      commit('setErrors', { query: err.message })
+    }
+  },
   async fetchUserProjects({ commit, rootState }) {
     try {
       commit('fetchingProjects', null)
@@ -88,6 +119,13 @@ const actions = {
 }
 
 const mutations = {
+  fetchingCurrentProject: (state) => {
+    state.fetchingCurrentProject = true
+  },
+  currentProjectFetched: (state, val) => {
+    state.currentProject = val
+    state.fetchingCurrentProject = false
+  },
   fetchingProjects: (state) => {
     state.fetchingProjects = true
   },
@@ -113,6 +151,7 @@ const mutations = {
     state.success = null
   },
   clearProjects: (state) => {
+    state.currentProject = {}
     state.projects = []
     state.errors = null
     state.success = null

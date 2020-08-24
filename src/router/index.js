@@ -6,6 +6,7 @@ import Home from '../views/Home.vue'
 import Dashboard from '../views/Dashboard.vue'
 import Register from '../views/Register.vue'
 import Login from '../views/Login.vue'
+import CurrentProject from '../views/CurrentProject.vue'
 
 Vue.use(VueRouter)
 
@@ -45,6 +46,14 @@ const routes = [
       } else {
         next()
       }
+    },
+  },
+  {
+    path: '/manage/:projectid',
+    name: 'CurrentProject',
+    component: CurrentProject,
+    meta: {
+      requiresAuth: true,
     },
   },
 ]

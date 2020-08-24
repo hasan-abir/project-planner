@@ -62,6 +62,7 @@ export default {
   color: var(--font);
   font-weight: 700;
   text-decoration: none;
+  padding: var(--space1) 0;
 }
 
 .link {

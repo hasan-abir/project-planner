@@ -45,15 +45,6 @@ export default {
   padding: var(--space2) 0;
 }
 
-.loader {
-  display: flex;
-  justify-content: center;
-}
-
-img {
-  width: var(--space3);
-}
-
 .project-list {
   display: flex;
   justify-content: center;

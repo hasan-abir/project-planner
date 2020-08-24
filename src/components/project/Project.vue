@@ -2,7 +2,7 @@
   <div class="project">
     <h3>{{project.title}}</h3>
     <div class="divider"></div>
-    <a href="#">Open Project</a>
+    <router-link :to="'/manage/'+project.id">Open Project</router-link>
   </div>
 </template>
 
