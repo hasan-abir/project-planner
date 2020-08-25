@@ -7,6 +7,9 @@ const state = {
   fetchingProjects: true,
   projects: [],
   creatingProject: false,
+  addingTask: false,
+  updatingTask: false,
+  removingTask: false,
   errors: null,
   success: null,
 }
@@ -17,6 +20,9 @@ const getters = {
   fetchingProjects: (state) => state.fetchingProjects,
   projects: (state) => state.projects,
   creatingProject: (state) => state.creatingProject,
+  addingTask: (state) => state.addingTask,
+  updatingTask: (state) => state.updatingTask,
+  removingTask: (state) => state.removingTask,
   errors: (state) => state.errors,
   success: (state) => state.success,
 }
@@ -38,9 +44,24 @@ const actions = {
       let project = {}
 
       if (projectRef.exists) {
+        let tasks = []
+
+        const querySnapshot = await db
+          .collection('users')
+          .doc(author)
+          .collection('projects')
+          .doc(projectId)
+          .collection('tasks')
+          .get()
+
+        querySnapshot.forEach((doc) => {
+          tasks = [...tasks, { id: doc.id, ...doc.data() }]
+        })
+
         project = {
           id: projectRef.id,
           ...projectRef.data(),
+          tasks,
         }
       }
 
@@ -110,8 +131,100 @@ const actions = {
       commit('setErrors', { non_field: err.message })
     }
   },
+  async addTask({ commit, rootState }, args) {
+    const { projectId, note, status, clearForm } = args
+
+    try {
+      commit('addingTask', null)
+
+      if (note === '')
+        return commit('setErrors', {
+          note: 'Adding a note is required',
+        })
+
+      const author = rootState.auth.user.userId
+
+      const newTask = {
+        note,
+        status,
+      }
+
+      const docRef = await db
+        .collection('users')
+        .doc(author)
+        .collection('projects')
+        .doc(projectId)
+        .collection('tasks')
+        .add(newTask)
+
+      commit('projectUpdated', { id: docRef.id, ...newTask })
+
+      clearForm()
+    } catch (err) {
+      commit('setErrors', { non_field: err.message })
+    }
+  },
+  async updateTask({ commit, rootState }, args) {
+    const { projectId, taskId, status, toggleActions } = args
+
+    try {
+      commit('updatingTask', null)
+
+      const author = rootState.auth.user.userId
+
+      const taskDoc = await db
+        .collection('users')
+        .doc(author)
+        .collection('projects')
+        .doc(projectId)
+        .collection('tasks')
+        .doc(taskId)
+
+      if ((await taskDoc.get()).exists) {
+        await taskDoc.update({
+          status,
+        })
+
+        commit('taskUpdated', {
+          id: taskId,
+          status,
+        })
+
+        toggleActions(false)
+      }
+    } catch (err) {
+      commit('setErrors', { query: err.message })
+    }
+  },
+  async removeTask({ commit, rootState }, args) {
+    const { projectId, taskId, toggleActions } = args
+
+    try {
+      commit('removingTask', null)
+
+      const author = rootState.auth.user.userId
+
+      await db
+        .collection('users')
+        .doc(author)
+        .collection('projects')
+        .doc(projectId)
+        .collection('tasks')
+        .doc(taskId)
+        .delete()
+
+      commit('taskRemoved', taskId)
+
+      toggleActions(false)
+    } catch (err) {
+      commit('setErrors', { query: err.message })
+    }
+  },
   clearSuccess({ commit }) {
     commit('clearSuccess')
+  },
+  clearErrors({ commit }) {
+    commit('setErrors', null)
   },
   clearProjects({ commit }) {
     commit('clearProjects', null)
@@ -140,12 +253,54 @@ const mutations = {
     state.errors = null
     state.success = null
   },
+  addingTask: (state) => {
+    state.addingTask = true
+    state.errors = null
+    state.success = null
+  },
+  updatingTask: (state) => {
+    state.updatingTask = true
+    state.errors = null
+    state.success = null
+  },
+  removingTask: (state) => {
+    state.removingTask = true
+    state.errors = null
+    state.success = null
+  },
   projectCreated: (state, val) => {
     state.creatingProject = false
     state.projects = [val, ...state.projects]
     state.success = {
       projectCreated: 'Project created successfully!',
     }
+  },
+  projectUpdated: (state, val) => {
+    state.addingTask = false
+    state.currentProject.tasks = [...state.currentProject.tasks, val]
+    state.success = {
+      projectUpdated: 'Task created successfully!',
+    }
+  },
+  taskUpdated: (state, val) => {
+    state.updatingTask = false
+
+    const tasks = [...state.currentProject.tasks]
+
+    const index = tasks.findIndex((item) => item.id === val.id)
+
+    tasks[index].status = val.status
+
+    state.currentProject.tasks = tasks
+  },
+  taskRemoved: (state, val) => {
+    state.removingTask = false
+
+    const tasks = [...state.currentProject.tasks].filter(
+      (item) => item.id !== val
+    )
+
+    state.currentProject.tasks = tasks
   },
   clearSuccess: (state) => {
     state.success = null
@@ -159,6 +314,9 @@ const mutations = {
   setErrors: (state, val) => {
     state.creatingProject = false
     state.errors = val
+    state.addingTask = false
+    state.updatingTask = false
+    state.removingTask = false
   },
 }
 

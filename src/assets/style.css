@@ -86,13 +86,14 @@ button {
   text-transform: uppercase;
 }
 
+input[type='submit']:disabled,
+button:disabled {
+  opacity: 0.5;
+}
+
 input[type='submit'] {
   background: var(--primary);
   color: var(--light);
-}
-
-input[type='submit']:disabled {
-  background: var(--primaryLight);
 }
 
 .divider {

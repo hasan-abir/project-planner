@@ -2,9 +2,9 @@
   <div>
     <p>Click the plus icon to create a task for that column</p>
     <div class="row">
-      <Todo />
-      <InProgress />
-      <Done />
+      <Todo :tasks="currentProject.tasks.filter(task => task.status == 'todo')" />
+      <InProgress :tasks="currentProject.tasks.filter(task => task.status == 'in-progress')" />
+      <Done :tasks="currentProject.tasks.filter(task => task.status == 'done')" />
     </div>
   </div>
 </template>
@@ -13,6 +13,7 @@
 import Todo from "./Todo";
 import InProgress from "./InProgress";
 import Done from "./Done";
+import { mapGetters } from "vuex";
 
 export default {
   name: "Columns",
@@ -20,6 +21,11 @@ export default {
     Todo,
     InProgress,
     Done,
+  },
+  computed: {
+    ...mapGetters({
+      currentProject: "project/currentProject",
+    }),
   },
 };
 </script>

@@ -1,13 +1,13 @@
 <template>
   <div class="task">
-    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Corporis, nemo.</p>
+    <p>{{task.note}}</p>
     <div class="dropdown">
-      <button @click="toggleActions(true)">
+      <button @click="toggleActions(true)" :disabled="addingTask || updatingTask || removingTask">
         <i class="fas fa-ellipsis-v"></i>
       </button>
       <template v-if="actionsOpen">
         <div class="dropdown-content">
-          <TaskActions />
+          <TaskActions :status="task.status" :taskId="task.id" :toggleActions="toggleActions" />
         </div>
         <div class="dropdown-closer" @click="toggleActions(false)"></div>
       </template>
@@ -17,9 +17,11 @@
 
 <script>
 import TaskActions from "./TaskActions";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "Task",
+  props: ["task"],
   components: {
     TaskActions,
   },
@@ -27,6 +29,13 @@ export default {
     return {
       actionsOpen: false,
     };
+  },
+  computed: {
+    ...mapGetters({
+      addingTask: "project/addingTask",
+      updatingTask: "project/updatingTask",
+      removingTask: "project/removingTask",
+    }),
   },
   methods: {
     toggleActions(value) {
@@ -47,6 +56,7 @@ export default {
   margin: var(--spacehalf) 0;
   display: flex;
   align-items: flex-start;
+  justify-content: space-between;
   position: relative;
 }
 

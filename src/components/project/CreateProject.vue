@@ -9,7 +9,7 @@
           v-if="success && success.projectCreated"
           @click="clearSuccess"
         >{{ success.projectCreated }}</div>
-        <div class="error" v-if="errors && errors.none_field">{{ errors.none_field }}</div>
+        <div class="error" v-if="errors && errors.non_field">{{ errors.non_field }}</div>
         <div class="error" v-if="errors && errors.title">{{ errors.title }}</div>
         <div class="form-group">
           <label>Project Title</label>

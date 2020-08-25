@@ -2,30 +2,64 @@
   <div>
     <form @submit.prevent="submitTask">
       <div class="form-group">
-        <div class="error">A note is required</div>
+        <div
+          class="success"
+          v-if="success && success.projectUpdated"
+          @click="clearSuccess"
+        >{{ success.projectUpdated }}</div>
+        <div class="error" v-if="errors && errors.non_field">{{ errors.non_field }}</div>
+        <div class="error" v-if="errors && errors.note">{{ errors.note }}</div>
         <label>Add Note</label>
-        <textarea rows="2" v-model="task"></textarea>
+        <textarea rows="2" v-model="note"></textarea>
       </div>
       <div class="btn-group">
-        <input type="submit" value="Add" />
-        <button @click="toggleAddForm(false)" type="button">Cancel</button>
+        <input type="submit" value="Add" :disabled="addingTask || updatingTask || removingTask" />
+        <button
+          @click="toggleAddForm(false)"
+          type="button"
+          :disabled="addingTask || updatingTask || removingTask"
+        >Cancel</button>
       </div>
     </form>
   </div>
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
+
 export default {
   name: "AddTask",
-  props: ["toggleAddForm"],
+  props: ["toggleAddForm", "status"],
   data() {
     return {
-      task: "",
+      note: "",
     };
   },
+  computed: {
+    ...mapGetters({
+      currentProject: "project/currentProject",
+      errors: "project/errors",
+      success: "project/success",
+      addingTask: "project/addingTask",
+      updatingTask: "project/updatingTask",
+      removingTask: "project/removingTask",
+    }),
+  },
   methods: {
+    ...mapActions({
+      addTask: "project/addTask",
+      clearSuccess: "project/clearSuccess",
+    }),
     submitTask() {
-      console.log(this.task);
+      this.addTask({
+        projectId: this.currentProject.id,
+        note: this.note,
+        status: this.status,
+        clearForm: this.clearForm,
+      });
+    },
+    clearForm() {
+      this.note = "";
     },
   },
 };
@@ -64,7 +98,8 @@ button {
   color: var(--primary);
 }
 
-.error {
+.error,
+.success {
   margin-bottom: var(--space1);
 }
 </style>

@@ -7,19 +7,19 @@
       </button>
     </div>
     <div class="divider"></div>
-    <AddTask v-if="addOpen" :toggleAddForm="toggleAddForm" />
-    <Task />
-    <Task />
-    <Task />
+    <AddTask v-if="addOpen" :toggleAddForm="toggleAddForm" status="in-progress" />
+    <Task v-for="task in tasks" :key="task.id" :task="task" />
   </div>
 </template>
 
 <script>
 import AddTask from "./AddTask";
 import Task from "./Task";
+import { mapActions } from "vuex";
 
 export default {
   name: "InProgress",
+  props: ["tasks"],
   components: {
     AddTask,
     Task,
@@ -30,8 +30,14 @@ export default {
     };
   },
   methods: {
+    ...mapActions({
+      clearSuccess: "project/clearSuccess",
+      clearErrors: "project/clearErrors",
+    }),
     toggleAddForm(value) {
       this.addOpen = value;
+      this.clearSuccess();
+      this.clearErrors();
     },
   },
 };
