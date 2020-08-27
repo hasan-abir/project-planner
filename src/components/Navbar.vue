@@ -54,7 +54,6 @@ export default {
   z-index: 10;
   background: var(--light);
   border-bottom: 1px solid var(--borderColor);
-  /* box-shadow: var(--shadow); */
 }
 
 .brand {
@@ -91,5 +90,11 @@ ul {
 
 li {
   display: inline;
+}
+
+@media (max-width: 600px) {
+  .container {
+    flex-direction: column;
+  }
 }
 </style>

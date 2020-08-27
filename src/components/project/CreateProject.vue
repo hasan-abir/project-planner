@@ -1,5 +1,6 @@
 <template>
   <div class="create-project">
+    <h3 v-if="user">Welcome, {{user.displayName}}</h3>
     <h1>Create a new project</h1>
     <p>Manage your lifelong dream projects with tasks just like that!</p>
     <div class="form-wrapper">
@@ -35,6 +36,7 @@ export default {
   computed: {
     ...mapGetters({
       creatingProject: "project/creatingProject",
+      user: "auth/user",
       errors: "project/errors",
       success: "project/success",
     }),
@@ -62,6 +64,12 @@ export default {
 
 .create-project {
   text-align: center;
+}
+
+h3 {
+  font-family: var(--heading);
+  margin-bottom: var(--space1);
+  color: var(--borderColor);
 }
 
 h1 {

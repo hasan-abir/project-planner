@@ -28,4 +28,10 @@ export default {
   padding-top: var(--spaceTop);
   padding-bottom: var(--space2);
 }
+
+@media (max-width: 600px) {
+  .wrapper {
+    padding-top: var(--spaceTopLg);
+  }
+}
 </style>

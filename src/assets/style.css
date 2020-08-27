@@ -3,7 +3,7 @@
 
 :root {
   --heading: 'Raleway', sans-serif;
-  --shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.2);
+  --shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.3);
   --round: 3px;
   --roundLg: 10px;
   --font: #1b4058;
@@ -24,6 +24,7 @@
   --space4: 4rem;
   --space5: 5rem;
   --spaceTop: 8rem;
+  --spaceTopLg: 10rem;
   --sizeLg: 3rem;
   --sizeSm: 0.8rem;
 }

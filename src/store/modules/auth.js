@@ -11,6 +11,7 @@ const state = {
 }
 
 const getters = {
+  user: (state) => state.user,
   loadingUser: (state) => state.loadingUser,
   isLoggedIn: (state) => state.isLoggedIn,
   authenticating: (state) => state.authenticating,

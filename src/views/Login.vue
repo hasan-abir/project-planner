@@ -135,4 +135,13 @@ h1,
 .or {
   text-align: center;
 }
+
+@media (max-width: 600px) {
+  .wrapper {
+    padding-top: var(--spaceTopLg);
+  }
+  .card {
+    border: none;
+  }
+}
 </style>

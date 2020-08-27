@@ -1,5 +1,6 @@
 import * as firebase from 'firebase/app'
 import { db } from '../../firebase'
+import router from '../../router'
 
 const state = {
   fetchingCurrentProject: true,
@@ -7,6 +8,7 @@ const state = {
   fetchingProjects: true,
   projects: [],
   creatingProject: false,
+  removingProject: false,
   addingTask: false,
   updatingTask: false,
   removingTask: false,
@@ -20,6 +22,7 @@ const getters = {
   fetchingProjects: (state) => state.fetchingProjects,
   projects: (state) => state.projects,
   creatingProject: (state) => state.creatingProject,
+  removingProject: (state) => state.removingProject,
   addingTask: (state) => state.addingTask,
   updatingTask: (state) => state.updatingTask,
   removingTask: (state) => state.removingTask,
@@ -129,6 +132,41 @@ const actions = {
       clearForm()
     } catch (err) {
       commit('setErrors', { non_field: err.message })
+    }
+  },
+  async deleteProject({ commit, rootState }, args) {
+    const { projectId, toggleDelete } = args
+
+    try {
+      commit('removingProject', true)
+
+      const author = rootState.auth.user.userId
+
+      const projectDoc = await db
+        .collection('users')
+        .doc(author)
+        .collection('projects')
+        .doc(projectId)
+
+      const tasksSnapshot = await projectDoc.collection('tasks').get()
+
+      const batch = await db.batch()
+
+      tasksSnapshot.forEach(function(doc) {
+        batch.delete(doc.ref)
+      })
+
+      await batch.commit()
+
+      await projectDoc.delete()
+
+      toggleDelete(false)
+
+      commit('removingProject', false)
+
+      router.push('/dashboard')
+    } catch (err) {
+      commit('setErrors', { query: err.message })
     }
   },
   async addTask({ commit, rootState }, args) {
@@ -250,6 +288,11 @@ const mutations = {
   },
   creatingProject: (state) => {
     state.creatingProject = true
+    state.errors = null
+    state.success = null
+  },
+  removingProject: (state, val) => {
+    state.removingProject = val
     state.errors = null
     state.success = null
   },
