@@ -1,24 +1,5 @@
-# project_planner
+# Hipstagram
 
-## Project setup
-```
-npm install
-```
+A github project manager clone that can be used to create projects and manage tasks efficiently.
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+Live demo - https://project-planner.netlify.app/

@@ -71,6 +71,8 @@ const actions = {
       }
 
       commit('authenticated', newUser)
+
+      router.push('/dashboard')
     } catch (err) {
       commit('setErrors', { non_field: err.message })
     }
