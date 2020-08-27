@@ -1,4 +1,4 @@
-# Hipstagram
+# Project Planner
 
 A github project manager clone that can be used to create projects and manage tasks efficiently.
 
