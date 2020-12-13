@@ -6,33 +6,18 @@
       <router-link to="/register" class="register">Get started</router-link>
     </div>
     <div class="divider"></div>
-    <h2>Here's how it works</h2>
-    <div class="how-it-works">
-      <div class="step">
-        <p>
-          <b>Create any project</b>
-          <br />that you want to organize and plan out.
-        </p>
-        <div class="img">
-          <img src="../assets/step1.jpg" alt />
-        </div>
-      </div>
-      <div class="step step-reverse">
-        <div class="img">
-          <img src="../assets/step2.jpg" alt />
-        </div>
-        <p>
-          <b>Manage Tasks</b>
-          <br />and be able to move them between columns.
-        </p>
-      </div>
-    </div>
+    <ProjectDetails />
   </div>
 </template>
 
 <script>
+import ProjectDetails from "../components/testapp/project/ProjectDetails";
+
 export default {
   name: "Home",
+  components: {
+    ProjectDetails,
+  },
 };
 </script>
 
