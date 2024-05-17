@@ -10,7 +10,3 @@
     font-family: "Rubik", sans-serif;
   }
 }
-
-.container {
-  @apply max-w-[1080px] mx-auto px-8 min-h-screen;
-}

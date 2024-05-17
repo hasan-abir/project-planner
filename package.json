@@ -3,11 +3,13 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "prettier --write src/ && ng serve",
-    "build": "prettier --write src/ && ng build",
+    "start": "ng serve",
+    "build": "ng build",
+    "format": "prettier --write src/",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:project_planner": "node dist/project_planner/server/server.mjs"
+    "serve:ssr:project_planner": "node dist/project_planner/server/server.mjs",
+    "prepare": "husky"
   },
   "private": true,
   "dependencies": {
@@ -34,6 +36,7 @@
     "@types/jasmine": "~5.1.0",
     "@types/node": "^18.18.0",
     "autoprefixer": "^10.4.19",
+    "husky": "^9.0.11",
     "jasmine-core": "~5.1.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",
