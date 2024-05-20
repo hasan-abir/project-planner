@@ -1,0 +1,14 @@
+@if (textboxOpen) {
+  <input
+    [ngClass]="'rounded-lg w-full px-[1px] ' + textClasses"
+    type="text"
+    #textbox
+    name="editable-text"
+    [(ngModel)]="textContent"
+    (focusout)="textboxFocusout()"
+  />
+} @else {
+  <h2 (click)="toggleTextbox(true)" [ngClass]="textClasses">
+    {{ textContent }}
+  </h2>
+}

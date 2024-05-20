@@ -1,0 +1,28 @@
+<app-card>
+  <div header class="flex gap-4">
+    <div class="flex gap-3">
+      <button>
+        <img
+          class="w-3"
+          alt="nav arrow left"
+          src="/assets/nav-arrow-left.svg"
+        />
+      </button>
+      <button>
+        <img
+          class="w-3"
+          alt="nav arrow right"
+          src="/assets/nav-arrow-right.svg"
+        />
+      </button>
+    </div>
+    <app-editable-title
+      class="flex-1"
+      [textClasses]="'text-center text-lg sm:text-xl'"
+      [textContent]="headerTitle"
+    />
+    <button><img class="w-3" alt="minus" src="/assets/minus.svg" /></button>
+  </div>
+  <p body>Card body 1</p>
+  <p footer>Card footer 1</p>
+</app-card>
