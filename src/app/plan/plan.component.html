@@ -3,14 +3,14 @@
     <div class="flex gap-3">
       <button>
         <img
-          class="w-3"
+          class="w-2"
           alt="nav arrow left"
           src="/assets/nav-arrow-left.svg"
         />
       </button>
       <button>
         <img
-          class="w-3"
+          class="w-2"
           alt="nav arrow right"
           src="/assets/nav-arrow-right.svg"
         />
@@ -24,5 +24,39 @@
     <button><img class="w-3" alt="minus" src="/assets/minus.svg" /></button>
   </div>
   <p body>Card body 1</p>
-  <p footer>Card footer 1</p>
+  <div footer>
+    <div class="flex justify-between gap-4 mb-3">
+      <p>Add Task</p>
+      <button><img class="w-3" alt="plus" src="/assets/plus.svg" /></button>
+    </div>
+    <form class="text-sm">
+      <label for="task-title">Title</label>
+      <input
+        class="w-full border-[1px] border-black rounded-md p-2 mb-3"
+        type="text"
+        name="task-title"
+        id="task-title"
+        placeholder="Task title..."
+      />
+      <label for="task-description">Description</label>
+      <textarea
+        class="w-full border-[1px] border-black rounded-md p-2 resize-none mb-2"
+        name="task-description"
+        id="task-description"
+        placeholder="Task description..."
+      ></textarea>
+      <div class="flex flex-wrap gap-2 mb-3">
+        @for (label of labels; track label.id) {
+          <app-pill
+            [clickable]="true"
+            [colorVariant]="label.priority"
+            [selected]="selectedLabels.includes(label.id)"
+            (click)="onSelectLabel(label.id)"
+            >{{ label.name }}</app-pill
+          >
+        }
+      </div>
+      <app-cta-button>SAVE</app-cta-button>
+    </form>
+  </div>
 </app-card>
