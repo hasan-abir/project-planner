@@ -5,6 +5,7 @@ import { CtaButtonComponent } from '../utilities/cta-button/cta-button.component
 import { PillComponent } from '../utilities/pill/pill.component';
 import { CommonModule } from '@angular/common';
 import gsap from 'gsap';
+import { TaskComponent } from '../task/task.component';
 
 interface Label {
   id: string;
@@ -21,6 +22,7 @@ interface Label {
     EditableTitleComponent,
     CtaButtonComponent,
     PillComponent,
+    TaskComponent,
   ],
   templateUrl: './plan.component.html',
   styleUrl: './plan.component.css',

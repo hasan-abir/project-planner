@@ -20,6 +20,7 @@ export class EditableTitleComponent implements AfterViewChecked {
 
   @Input() textClasses: string = '';
   @Input() textContent: string = '';
+  @Input() multitext: boolean = false;
   shouldFocus: boolean = false;
   textboxOpen: boolean = false;
 

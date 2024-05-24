@@ -12,4 +12,5 @@ export class PillComponent {
   @Input() clickable: boolean = false;
   @Input() colorVariant: number = 1;
   @Input() selected: boolean = false;
+  @Input() small: boolean = false;
 }

@@ -1,12 +1,13 @@
 <span
-  class="py-1 px-2 rounded-md font-bold text-pretty text-white inline-block"
+  class="py-1 px-2 rounded-md font-bold text-pretty text-white inline-block align-top"
   [ngClass]="{
     'cursor-pointer': clickable,
     'ring-2 ring-black': clickable && selected,
     'bg-gray-500': colorVariant === 1,
     'bg-blue-500': colorVariant === 2,
     'bg-amber-500': colorVariant === 3,
-    'bg-red-500': colorVariant === 4
+    'bg-red-500': colorVariant === 4,
+    'text-[0.6rem]': small
   }"
   ><ng-content></ng-content
 ></span>

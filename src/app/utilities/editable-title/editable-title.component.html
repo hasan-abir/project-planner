@@ -1,14 +1,31 @@
 @if (textboxOpen) {
-  <input
-    [ngClass]="'rounded-lg w-full px-[1px] ' + textClasses"
-    type="text"
-    #textbox
-    name="editable-text"
-    [(ngModel)]="textContent"
-    (focusout)="textboxFocusout()"
-  />
+  @if (multitext) {
+    <textarea
+      [ngClass]="'rounded-lg w-full p-2 ' + textClasses"
+      name="editable-text"
+      #textbox
+      cols="5"
+      [(ngModel)]="textContent"
+      (focusout)="textboxFocusout()"
+    ></textarea>
+  } @else {
+    <input
+      [ngClass]="'rounded-lg w-full p-2 ' + textClasses"
+      type="text"
+      #textbox
+      name="editable-text"
+      [(ngModel)]="textContent"
+      (focusout)="textboxFocusout()"
+    />
+  }
 } @else {
-  <h2 (click)="toggleTextbox(true)" [ngClass]="textClasses">
-    {{ textContent }}
-  </h2>
+  @if (multitext) {
+    <p (click)="toggleTextbox(true)" class="opacity-70" [ngClass]="textClasses">
+      {{ textContent }}
+    </p>
+  } @else {
+    <h2 (click)="toggleTextbox(true)" [ngClass]="textClasses">
+      {{ textContent }}
+    </h2>
+  }
 }

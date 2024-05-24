@@ -40,7 +40,7 @@ describe('CardComponent', () => {
     const compiled = fixture.nativeElement;
 
     const container = compiled.querySelector('.card-container');
-    expect(container.classList.contains('min-h-[520px]')).toBeTrue();
+    expect(container.classList.contains('max-h-[520px]')).toBeTrue();
   });
   it('should not render the card with fixed height', () => {
     component.fixedHeight = false;

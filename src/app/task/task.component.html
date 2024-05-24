@@ -1,0 +1,22 @@
+<div class="p-4 border-[1px] border-gray-200 rounded-md">
+  <div class="flex items-start justify-between gap-2">
+    <div class="flex flex-wrap gap-1">
+      <app-pill [colorVariant]="4" [small]="true">Priority 1</app-pill>
+      <app-pill [colorVariant]="3" [small]="true">Priority 2</app-pill>
+      <app-pill [colorVariant]="2" [small]="true">Priority 3</app-pill>
+      <app-pill [colorVariant]="1" [small]="true">Priority 4</app-pill>
+    </div>
+    <button class="w-3"><img src="/assets/cross.svg" alt="cross" /></button>
+  </div>
+  <app-editable-title
+    [textClasses]="'mt-4'"
+    [textContent]="'Ummm, watch some netflix I guess? Like I don’t know'"
+  />
+  <app-editable-title
+    [multitext]="true"
+    [textClasses]="'mt-2 text-xs'"
+    [textContent]="
+      'Then, I want to post a snapchat story. We’re gonna all die anyway. So, why not die with a good snapchat story.'
+    "
+  />
+</div>

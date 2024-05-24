@@ -36,6 +36,14 @@ describe('PillComponent', () => {
 
     expect(el).toBeTruthy();
   });
+  it('should have a smaller text', () => {
+    component.small = true;
+    fixture.detectChanges();
+
+    const el = fixture.nativeElement.querySelector('span');
+
+    expect(el.classList.contains('text-[0.6rem]')).toBeTrue();
+  });
   it('should have display all the variants', () => {
     component.colorVariant = 1;
     fixture.detectChanges();
