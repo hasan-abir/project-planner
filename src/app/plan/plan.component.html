@@ -25,11 +25,17 @@
   </div>
   <p body>Card body 1</p>
   <div footer>
-    <div class="flex justify-between gap-4 mb-3">
+    <div class="flex justify-between gap-4">
       <p>Add Task</p>
-      <button><img class="w-3" alt="plus" src="/assets/plus.svg" /></button>
+      <button (click)="toggleAddTask()">
+        @if (addTaskOpened) {
+          <img class="w-3" alt="plus" src="/assets/cross.svg" />
+        } @else {
+          <img class="w-3" alt="plus" src="/assets/plus.svg" />
+        }
+      </button>
     </div>
-    <form class="text-sm">
+    <form class="text-sm overflow-y-hidden h-0" #formRef>
       <label for="task-title">Title</label>
       <input
         class="w-full border-[1px] border-black rounded-md p-2 mb-3"
