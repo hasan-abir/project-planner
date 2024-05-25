@@ -1,4 +1,4 @@
-<div class="max-w-[1280px] mx-auto px-4 sm:px-8 min-h-screen">
+<div class="max-w-[1280px] mx-auto px-4 sm:px-8">
   <section class="text-center mt-12 mb-8">
     <h1 class="text-4xl mb-4">Project Planner</h1>
 
@@ -7,9 +7,10 @@
     </p>
   </section>
 
-  <section class="flex gap-4 pb-8 overflow-auto">
+  <section class="flex gap-4 pb-8 overflow-x-auto">
     <app-plan class="flex-1" [headerTitle]="'Card Header 1'" />
     <app-plan class="flex-1" [headerTitle]="'Card Header 2'" />
     <app-plan class="flex-1" [headerTitle]="'Card Header 3'" />
+    <app-plan-settings />
   </section>
 </div>

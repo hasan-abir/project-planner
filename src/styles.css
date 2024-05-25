@@ -10,3 +10,7 @@
     font-family: "Rubik", sans-serif;
   }
 }
+/* 
+*{
+  @apply border-[1px] border-red-500
+} */

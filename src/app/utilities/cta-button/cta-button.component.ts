@@ -10,4 +10,5 @@ import { Component, Input } from '@angular/core';
 })
 export class CtaButtonComponent {
   @Input() primary: boolean = true;
+  @Input() small: boolean = false;
 }

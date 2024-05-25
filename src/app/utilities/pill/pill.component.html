@@ -1,5 +1,5 @@
 <span
-  class="py-1 px-2 rounded-md font-bold text-pretty text-white inline-block align-top"
+  class="w-full flex justify-between items-center py-1 px-2 rounded-md font-bold text-pretty text-white inline-block align-top"
   [ngClass]="{
     'cursor-pointer': clickable,
     'ring-2 ring-black': clickable && selected,
@@ -9,5 +9,8 @@
     'bg-red-500': colorVariant === 4,
     'text-[0.6rem]': small
   }"
-  ><ng-content></ng-content
-></span>
+  ><ng-content></ng-content>
+  @if (close) {
+    <span class="inline w-2"><img src="/assets/cross.svg" alt="" /></span>
+  }
+</span>
