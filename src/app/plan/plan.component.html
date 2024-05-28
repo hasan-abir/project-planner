@@ -1,19 +1,41 @@
 <app-card>
   <div header class="flex gap-4">
     <div class="flex gap-3">
-      <button>
-        <img
-          class="w-2"
-          alt="nav arrow left"
-          src="/assets/nav-arrow-left.svg"
-        />
+      <button class="w-2">
+        <svg
+          class="w-full"
+          width="10"
+          height="18"
+          viewBox="0 0 10 18"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M9 1L1 9L9 17"
+            stroke="black"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
       </button>
-      <button>
-        <img
-          class="w-2"
-          alt="nav arrow right"
-          src="/assets/nav-arrow-right.svg"
-        />
+      <button class="w-2">
+        <svg
+          class="w-full"
+          width="10"
+          height="18"
+          viewBox="0 0 10 18"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M1 1L9 9L1 17"
+            stroke="black"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
       </button>
     </div>
     <app-editable-title
@@ -21,7 +43,24 @@
       [textClasses]="'text-center text-lg sm:text-xl'"
       [textContent]="headerTitle"
     />
-    <button><img class="w-3" alt="minus" src="/assets/minus.svg" /></button>
+    <button class="w-4">
+      <svg
+        class="w-full"
+        width="18"
+        height="2"
+        viewBox="0 0 18 2"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M17 1H1"
+          stroke="black"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
+    </button>
   </div>
   <div body class="flex flex-col gap-3">
     <app-task />
@@ -38,11 +77,41 @@
   <div footer>
     <div class="flex justify-between gap-4">
       <p>Add Task</p>
-      <button (click)="toggleAddTask()">
+      <button (click)="toggleAddTask()" class="w-3">
         @if (addTaskOpened) {
-          <img class="w-3" alt="plus" src="/assets/cross.svg" />
+          <svg
+            class="w-full"
+            width="11"
+            height="11"
+            viewBox="0 0 11 11"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M1.27207 1.25736L9.75736 9.74264M9.75736 1.25736L1.27208 9.74264"
+              stroke="black"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
         } @else {
-          <img class="w-3" alt="plus" src="/assets/plus.svg" />
+          <svg
+            class="w-full"
+            width="14"
+            height="15"
+            viewBox="0 0 14 15"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M7 1.5V13.5M13 7.5H1"
+              stroke="black"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
         }
       </button>
     </div>
