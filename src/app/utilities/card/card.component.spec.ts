@@ -33,7 +33,7 @@ describe('CardComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should render the card with fixed height', () => {
+  it('should render the card with max height', () => {
     component.fixedHeight = true;
     fixture.detectChanges();
 
@@ -42,7 +42,7 @@ describe('CardComponent', () => {
     const container = compiled.querySelector('.card-container');
     expect(container.classList.contains('max-h-[520px]')).toBeTrue();
   });
-  it('should not render the card with fixed height', () => {
+  it('should not render the card with min height', () => {
     component.fixedHeight = false;
     fixture.detectChanges();
 

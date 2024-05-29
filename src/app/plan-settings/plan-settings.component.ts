@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { CtaButtonComponent } from '../utilities/cta-button/cta-button.component';
 import { PillComponent } from '../utilities/pill/pill.component';
 
@@ -9,4 +9,10 @@ import { PillComponent } from '../utilities/pill/pill.component';
   templateUrl: './plan-settings.component.html',
   styleUrl: './plan-settings.component.css',
 })
-export class PlanSettingsComponent {}
+export class PlanSettingsComponent {
+  @Output() addANewPlan: EventEmitter<void> = new EventEmitter<void>();
+
+  onAddPlanClick() {
+    this.addANewPlan.emit();
+  }
+}

@@ -19,4 +19,11 @@ describe('PlanSettingsComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+  it('should emit addANewPlan on button click', () => {
+    spyOn(component.addANewPlan, 'emit');
+
+    const compiled = fixture.nativeElement;
+    compiled.querySelector('#add-plan-btn').click();
+    expect(component.addANewPlan.emit).toHaveBeenCalledTimes(1);
+  });
 });

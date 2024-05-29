@@ -77,7 +77,7 @@
   <div footer>
     <div class="flex justify-between gap-4">
       <p>Add Task</p>
-      <button (click)="toggleAddTask()" class="w-3">
+      <button id="toggle-add-task-btn" (click)="toggleAddTask()" class="w-3">
         @if (addTaskOpened) {
           <svg
             class="w-full"
@@ -132,15 +132,18 @@
         placeholder="Task description..."
       ></textarea>
       <div class="flex flex-wrap gap-2 mb-3">
-        @for (label of labels; track label.id) {
-          <app-pill
-            [clickable]="true"
-            [colorVariant]="label.priority"
-            [selected]="selectedLabels.includes(label.id)"
-            (click)="onSelectLabel(label.id)"
-            >{{ label.name }}</app-pill
-          >
-        }
+        <app-pill [clickable]="true" [colorVariant]="4" [selected]="false"
+          >Priority 1</app-pill
+        >
+        <app-pill [clickable]="true" [colorVariant]="3" [selected]="false"
+          >Priority 2</app-pill
+        >
+        <app-pill [clickable]="true" [colorVariant]="2" [selected]="false"
+          >Priority 3</app-pill
+        >
+        <app-pill [clickable]="true" [colorVariant]="1" [selected]="false"
+          >Priority 4</app-pill
+        >
       </div>
       <app-cta-button>SAVE</app-cta-button>
     </form>

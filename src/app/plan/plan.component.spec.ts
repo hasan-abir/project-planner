@@ -19,4 +19,22 @@ describe('PlanComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should toggle the visibility of form', () => {
+    const compiled = fixture.nativeElement;
+    const form = compiled.querySelector('form');
+    const button = compiled.querySelector('#toggle-add-task-btn');
+    button.click();
+    fixture.detectChanges();
+    setTimeout(() => {
+      expect(form.style.height).toBe('auto');
+
+      button.click();
+      fixture.detectChanges();
+
+      setTimeout(() => {
+        expect(form.style.height).toBe('0');
+      }, 500);
+    }, 500);
+  });
 });

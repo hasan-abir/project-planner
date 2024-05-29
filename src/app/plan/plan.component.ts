@@ -32,37 +32,6 @@ export class PlanComponent {
   @Input() headerTitle: string = '';
 
   addTaskOpened: boolean = false;
-  selectedLabels: string[] = [];
-  labels: Label[] = [
-    {
-      id: '1',
-      name: 'Priority 4',
-      priority: 4,
-    },
-    {
-      id: '2',
-      name: 'Priority 3',
-      priority: 3,
-    },
-    {
-      id: '3',
-      name: 'Priority 2',
-      priority: 2,
-    },
-    {
-      id: '4',
-      name: 'Priority 1',
-      priority: 1,
-    },
-  ];
-
-  onSelectLabel(id: string) {
-    if (this.selectedLabels.includes(id)) {
-      this.selectedLabels = this.selectedLabels.filter((item) => item !== id);
-    } else {
-      this.selectedLabels = [id, ...this.selectedLabels];
-    }
-  }
 
   toggleAddTask() {
     const defaultDuration = 0.25;

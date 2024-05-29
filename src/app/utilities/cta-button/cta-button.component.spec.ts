@@ -41,6 +41,13 @@ describe('CtaButtonComponent', () => {
     const primaryBtn = fixture.nativeElement.querySelector('.bg-green-300');
     expect(primaryBtn).toBeTruthy();
   });
+  it('should render it small', () => {
+    component.small = true;
+    fixture.detectChanges();
+
+    const smallBtn = fixture.nativeElement.querySelector('.text-xs');
+    expect(smallBtn).toBeTruthy();
+  });
   it('should render ng-content', () => {
     const compiled = TestBed.createComponent(TestComponent).nativeElement;
     const textContent = compiled.querySelector('.para').textContent;

@@ -73,4 +73,12 @@ describe('PillComponent', () => {
 
     expect(redEl).toBeTruthy();
   });
+  it('should have a close icon', () => {
+    component.close = true;
+    fixture.detectChanges();
+
+    const el = fixture.nativeElement.querySelector('#close-icon');
+
+    expect(el).toBeTruthy();
+  });
 });
