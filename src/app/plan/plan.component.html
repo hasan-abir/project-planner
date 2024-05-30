@@ -1,7 +1,7 @@
 <app-card>
   <div header class="flex gap-4">
-    <div class="flex gap-3">
-      <button class="w-2">
+    <button class="flex items-center gap-3">
+      <span class="w-2">
         <svg
           class="w-full"
           width="10"
@@ -18,8 +18,8 @@
             stroke-linejoin="round"
           />
         </svg>
-      </button>
-      <button class="w-2">
+      </span>
+      <span class="w-2">
         <svg
           class="w-full"
           width="10"
@@ -36,8 +36,8 @@
             stroke-linejoin="round"
           />
         </svg>
-      </button>
-    </div>
+      </span>
+    </button>
     <app-editable-title
       class="flex-1"
       [textClasses]="'text-center text-lg sm:text-xl'"

@@ -6,6 +6,7 @@ import { PillComponent } from '../utilities/pill/pill.component';
 import { CommonModule } from '@angular/common';
 import gsap from 'gsap';
 import { TaskComponent } from '../task/task.component';
+import { CdkDrag, CdkDragHandle } from '@angular/cdk/drag-drop';
 
 interface Label {
   id: string;
@@ -23,6 +24,8 @@ interface Label {
     CtaButtonComponent,
     PillComponent,
     TaskComponent,
+    CdkDrag,
+    CdkDragHandle,
   ],
   templateUrl: './plan.component.html',
   styleUrl: './plan.component.css',

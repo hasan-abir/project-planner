@@ -7,7 +7,12 @@
     </p>
   </section>
 
-  <section class="flex w-max px-4 sm:px-8 mx-auto gap-4 pb-8">
+  <section
+    cdkDropList
+    cdkDropListOrientation="horizontal"
+    (cdkDropListDropped)="drop($event)"
+    class="panels flex w-max px-4 sm:px-8 mx-auto gap-4 pb-8"
+  >
     <app-plan-settings (addANewPlan)="addANewPlan()" />
     @for (plan of plans; track plan.id) {
       <app-plan

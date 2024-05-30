@@ -1,9 +1,9 @@
 <div
-  class="card-container border-[1px] border-gray-200 shadow-lg flex flex-col"
+  cdkDrag
+  class="card-container bg-white border-[1px] border-gray-200 shadow-lg flex flex-col"
   [ngClass]="{ 'max-h-[520px]': fixedHeight }"
-  test
 >
-  <div class="px-6 py-4 border-b-[1px] border-gray-200">
+  <div cdkDragHandle class="px-6 py-4 border-b-[1px] border-gray-200">
     <ng-content select="[header]"></ng-content>
   </div>
   <div class="p-6 flex-1 min-h-full overflow-y-auto">

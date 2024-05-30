@@ -3,6 +3,13 @@ import { RouterOutlet } from '@angular/router';
 import { PlanComponent } from './plan/plan.component';
 import { PlanSettingsComponent } from './plan-settings/plan-settings.component';
 import { v4 as uuidv4 } from 'uuid';
+import {
+  CdkDragDrop,
+  CdkDrag,
+  CdkDropList,
+  moveItemInArray,
+  transferArrayItem,
+} from '@angular/cdk/drag-drop';
 
 interface Plan {
   id: string;
@@ -12,7 +19,13 @@ interface Plan {
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, PlanComponent, PlanSettingsComponent],
+  imports: [
+    RouterOutlet,
+    PlanComponent,
+    PlanSettingsComponent,
+    CdkDropList,
+    CdkDrag,
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
@@ -29,5 +42,9 @@ export class AppComponent {
 
   addANewPlan() {
     this.plans.unshift({ id: uuidv4(), title: 'New plan' });
+  }
+
+  drop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.plans, event.previousIndex, event.currentIndex);
   }
 }
