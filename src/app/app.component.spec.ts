@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { AppComponent } from './app.component';
+import { AppComponent, Plan } from './app.component';
 
 describe('AppComponent', () => {
   let component: AppComponent;
@@ -31,9 +31,9 @@ describe('AppComponent', () => {
   });
 
   it('should display all the plans', () => {
-    const plansArr = [
-      { id: '1', title: 'Plan 1' },
-      { id: '1', title: 'Plan 2' },
+    const plansArr: Plan[] = [
+      { id: '1', title: 'Plan 1', tasks: [] },
+      { id: '2', title: 'Plan 2', tasks: [] },
     ];
     component.plans = plansArr;
     fixture.detectChanges();
@@ -48,9 +48,9 @@ describe('AppComponent', () => {
     );
   });
   it('should display the new plan', () => {
-    const plansArr = [
-      { id: '1', title: 'Plan 1' },
-      { id: '1', title: 'Plan 2' },
+    const plansArr: Plan[] = [
+      { id: '1', title: 'Plan 1', tasks: [] },
+      { id: '2', title: 'Plan 2', tasks: [] },
     ];
     component.plans = plansArr;
     fixture.detectChanges();
@@ -66,5 +66,23 @@ describe('AppComponent', () => {
     expect(plans[2].getAttribute('ng-reflect-header-title')).toBe(
       plansArr[2].title,
     );
+  });
+
+  it('should add the new task', () => {
+    const plansArr: Plan[] = [
+      { id: '1', title: 'Plan 1', tasks: [] },
+      { id: '2', title: 'Plan 2', tasks: [] },
+    ];
+    component.plans = plansArr;
+    fixture.detectChanges();
+    const newTask = {
+      planId: '2',
+      title: 'New task',
+      description: 'Lorem ipsum',
+    };
+    component.addANewTaskToPlan(newTask);
+    fixture.detectChanges();
+
+    expect(component.plans[1].tasks.length === 1).toBeTrue();
   });
 });

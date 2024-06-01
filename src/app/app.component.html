@@ -17,7 +17,10 @@
     @for (plan of plans; track plan.id) {
       <app-plan
         class="max-w-[360px] min-w-[280px] flex-1"
+        [planId]="plan.id"
         [headerTitle]="plan.title"
+        [tasks]="plan.tasks"
+        (addANewTask)="addANewTaskToPlan($event)"
       />
     }
   </section>

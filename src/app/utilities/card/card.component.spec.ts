@@ -33,23 +33,23 @@ describe('CardComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should render the card with max height', () => {
+  it('should render the card with fixedheight', () => {
     component.fixedHeight = true;
     fixture.detectChanges();
 
     const compiled = fixture.nativeElement;
 
     const container = compiled.querySelector('.card-container');
-    expect(container.classList.contains('max-h-[520px]')).toBeTrue();
+    expect(container.classList.contains('h-[520px]')).toBeTrue();
   });
-  it('should not render the card with min height', () => {
+  it('should not render the card with fixed height', () => {
     component.fixedHeight = false;
     fixture.detectChanges();
 
     const compiled = fixture.nativeElement;
 
     const container = compiled.querySelector('.card-container');
-    expect(container.classList.contains('min-h-[520px]')).toBeFalse();
+    expect(container.classList.contains('h-[520px]')).toBeFalse();
   });
 
   it('should render provided header, body, and footer', () => {

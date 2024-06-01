@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { PillComponent } from '../utilities/pill/pill.component';
 import { EditableTitleComponent } from '../utilities/editable-title/editable-title.component';
 
@@ -9,4 +9,7 @@ import { EditableTitleComponent } from '../utilities/editable-title/editable-tit
   templateUrl: './task.component.html',
   styleUrl: './task.component.css',
 })
-export class TaskComponent {}
+export class TaskComponent {
+  @Input() title: string = '';
+  @Input() description: string = '';
+}

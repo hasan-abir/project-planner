@@ -1,5 +1,5 @@
-<div class="p-4 border-[1px] border-gray-200 rounded-md">
-  <div class="flex items-start justify-between gap-2">
+<div class="p-4 border-[1px] flex flex-col gap-2 border-gray-200 rounded-md">
+  <div class="flex items-start justify-between gap-2 mb-2">
     <div class="flex flex-wrap gap-1">
       <app-pill [colorVariant]="4" [small]="true">Priority 1</app-pill>
       <app-pill [colorVariant]="3" [small]="true">Priority 2</app-pill>
@@ -25,15 +25,12 @@
       </svg>
     </button>
   </div>
-  <app-editable-title
-    [textClasses]="'mt-4'"
-    [textContent]="'Ummm, watch some netflix I guess? Like I don’t know'"
-  />
-  <app-editable-title
-    [multitext]="true"
-    [textClasses]="'mt-2 text-xs'"
-    [textContent]="
-      'Then, I want to post a snapchat story. We’re gonna all die anyway. So, why not die with a good snapchat story.'
-    "
-  />
+  <app-editable-title [textContent]="title" />
+  @if (description.length > 0) {
+    <app-editable-title
+      [multitext]="true"
+      [textClasses]="'text-xs'"
+      [textContent]="description"
+    />
+  }
 </div>

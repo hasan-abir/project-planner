@@ -37,4 +37,48 @@ describe('PlanComponent', () => {
       }, 500);
     }, 500);
   });
+
+  it('should emit addANewTask with parameters on form submit', () => {
+    spyOn(component.addANewTask, 'emit');
+
+    const planId = '123';
+    component.planId = planId;
+    fixture.detectChanges();
+
+    const compiled = fixture.nativeElement;
+    const titleInput = compiled.querySelector('#task-title');
+    const descriptionInput = compiled.querySelector('#task-description');
+    const form = compiled.querySelector('form');
+    const title = 'New task';
+    titleInput.value = 'New task';
+    const description = 'Lorem ipsum';
+    descriptionInput.value = 'Lorem ipsum';
+
+    titleInput.dispatchEvent(new Event('input'));
+    descriptionInput.dispatchEvent(new Event('input'));
+
+    form.dispatchEvent(new Event('submit'));
+    fixture.detectChanges();
+
+    expect(component.addANewTask.emit).toHaveBeenCalledTimes(1);
+    expect(component.addANewTask.emit).toHaveBeenCalledWith({
+      planId,
+      title,
+      description,
+    });
+  });
+
+  it('should not emit addANewTask on form submit with incomplete form', () => {
+    spyOn(component.addANewTask, 'emit');
+
+    fixture.detectChanges();
+
+    const compiled = fixture.nativeElement;
+    const form = compiled.querySelector('form');
+
+    form.dispatchEvent(new Event('submit'));
+    fixture.detectChanges();
+
+    expect(component.addANewTask.emit).toHaveBeenCalledTimes(0);
+  });
 });

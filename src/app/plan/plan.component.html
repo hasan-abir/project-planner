@@ -63,16 +63,15 @@
     </button>
   </div>
   <div body class="flex flex-col gap-3">
-    <app-task />
-    <app-task />
-    <app-task />
-    <app-task />
-    <app-task />
-    <app-task />
-    <app-task />
-    <app-task />
-    <app-task />
-    <app-task />
+    @for (task of tasks; track task.id) {
+      <app-task
+        [id]="task.id"
+        [title]="task.title"
+        [description]="task.description"
+      />
+    } @empty {
+      <p class="opacity-70">There are no tasks to show...</p>
+    }
   </div>
   <div footer>
     <div class="flex justify-between gap-4">
@@ -115,7 +114,12 @@
         }
       </button>
     </div>
-    <form class="text-sm overflow-y-hidden h-0" #formRef>
+    <form
+      class="text-sm overflow-y-hidden h-0"
+      #formRef
+      #formData="ngForm"
+      (ngSubmit)="onSubmit()"
+    >
       <label for="task-title">Title</label>
       <input
         class="w-full border-[1px] border-black rounded-md p-2 mb-3"
@@ -123,6 +127,7 @@
         name="task-title"
         id="task-title"
         placeholder="Task title..."
+        [(ngModel)]="newTaskTitle"
       />
       <label for="task-description">Description</label>
       <textarea
@@ -130,6 +135,7 @@
         name="task-description"
         id="task-description"
         placeholder="Task description..."
+        [(ngModel)]="newTaskDescription"
       ></textarea>
       <div class="flex flex-wrap gap-2 mb-3">
         <app-pill [clickable]="true" [colorVariant]="4" [selected]="false"

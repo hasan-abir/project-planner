@@ -1,4 +1,11 @@
-import { Component, ElementRef, Input, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { CardComponent } from '../utilities/card/card.component';
 import { EditableTitleComponent } from '../utilities/editable-title/editable-title.component';
 import { CtaButtonComponent } from '../utilities/cta-button/cta-button.component';
@@ -7,11 +14,19 @@ import { CommonModule } from '@angular/common';
 import gsap from 'gsap';
 import { TaskComponent } from '../task/task.component';
 import { CdkDrag, CdkDragHandle } from '@angular/cdk/drag-drop';
+import { Task } from '../app.component';
+import { FormsModule } from '@angular/forms';
 
 interface Label {
   id: string;
   name: string;
   priority: number;
+}
+
+export interface NewTaskValue {
+  title: string;
+  description: string;
+  planId: string;
 }
 
 @Component({
@@ -26,13 +41,20 @@ interface Label {
     TaskComponent,
     CdkDrag,
     CdkDragHandle,
+    FormsModule,
   ],
   templateUrl: './plan.component.html',
   styleUrl: './plan.component.css',
 })
 export class PlanComponent {
   @ViewChild('formRef') formRef?: ElementRef;
+  @Input() planId: string = '';
   @Input() headerTitle: string = '';
+  @Input() tasks: Task[] = [];
+  @Output() addANewTask: EventEmitter<NewTaskValue> =
+    new EventEmitter<NewTaskValue>();
+  newTaskTitle: string = '';
+  newTaskDescription: string = '';
 
   addTaskOpened: boolean = false;
 
@@ -53,5 +75,20 @@ export class PlanComponent {
       });
       this.addTaskOpened = true;
     }
+  }
+
+  onSubmit() {
+    if (this.newTaskTitle.length === 0) return;
+
+    this.addANewTask.emit({
+      title: this.newTaskTitle,
+      description: this.newTaskDescription,
+      planId: this.planId,
+    });
+
+    this.newTaskTitle = '';
+    this.newTaskDescription = '';
+
+    this.toggleAddTask();
   }
 }
