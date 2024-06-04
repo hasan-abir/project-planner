@@ -1,157 +1,166 @@
-<app-card>
-  <div header class="flex gap-4">
-    <button class="flex items-center gap-3">
-      <span class="w-2">
-        <svg
-          class="w-full"
-          width="10"
-          height="18"
-          viewBox="0 0 10 18"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M9 1L1 9L9 17"
-            stroke="black"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-        </svg>
-      </span>
-      <span class="w-2">
-        <svg
-          class="w-full"
-          width="10"
-          height="18"
-          viewBox="0 0 10 18"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M1 1L9 9L1 17"
-            stroke="black"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-        </svg>
-      </span>
-    </button>
-    <app-editable-title
-      class="flex-1"
-      [textClasses]="'text-center text-lg sm:text-xl'"
-      [textContent]="headerTitle"
-    />
-    <button class="w-4">
-      <svg
-        class="w-full"
-        width="18"
-        height="2"
-        viewBox="0 0 18 2"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M17 1H1"
-          stroke="black"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        />
-      </svg>
-    </button>
-  </div>
-  <div body class="flex flex-col gap-3">
-    @for (task of tasks; track task.id) {
-      <app-task
-        [id]="task.id"
-        [title]="task.title"
-        [description]="task.description"
+<article cdkDrag>
+  <app-card>
+    <div header cdkDragHandle class="flex gap-4">
+      <button class="flex items-center gap-3">
+        <span class="w-2">
+          <svg
+            class="w-full"
+            width="10"
+            height="18"
+            viewBox="0 0 10 18"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M9 1L1 9L9 17"
+              stroke="black"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </span>
+        <span class="w-2">
+          <svg
+            class="w-full"
+            width="10"
+            height="18"
+            viewBox="0 0 10 18"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M1 1L9 9L1 17"
+              stroke="black"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </span>
+      </button>
+      <app-editable-title
+        class="flex-1"
+        [textClasses]="'text-center text-lg sm:text-xl'"
+        [textContent]="headerTitle"
       />
-    } @empty {
-      <p class="opacity-70">There are no tasks to show...</p>
-    }
-  </div>
-  <div footer>
-    <div class="flex justify-between gap-4">
-      <p>Add Task</p>
-      <button id="toggle-add-task-btn" (click)="toggleAddTask()" class="w-3">
-        @if (addTaskOpened) {
-          <svg
-            class="w-full"
-            width="11"
-            height="11"
-            viewBox="0 0 11 11"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M1.27207 1.25736L9.75736 9.74264M9.75736 1.25736L1.27208 9.74264"
-              stroke="black"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
-        } @else {
-          <svg
-            class="w-full"
-            width="14"
-            height="15"
-            viewBox="0 0 14 15"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M7 1.5V13.5M13 7.5H1"
-              stroke="black"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
-        }
+      <button class="w-4">
+        <svg
+          class="w-full"
+          width="18"
+          height="2"
+          viewBox="0 0 18 2"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M17 1H1"
+            stroke="black"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
       </button>
     </div>
-    <form
-      class="text-sm overflow-y-hidden h-0"
-      #formRef
-      #formData="ngForm"
-      (ngSubmit)="onSubmit()"
+    <div
+      body
+      cdkDropList
+      [cdkDropListData]="tasks"
+      (cdkDropListDropped)="drop($event)"
+      class="min-h-full flex flex-col gap-3"
     >
-      <label for="task-title">Title</label>
-      <input
-        class="w-full border-[1px] border-black rounded-md p-2 mb-3"
-        type="text"
-        name="task-title"
-        id="task-title"
-        placeholder="Task title..."
-        [(ngModel)]="newTaskTitle"
-      />
-      <label for="task-description">Description</label>
-      <textarea
-        class="w-full border-[1px] border-black rounded-md p-2 resize-none mb-2"
-        name="task-description"
-        id="task-description"
-        placeholder="Task description..."
-        [(ngModel)]="newTaskDescription"
-      ></textarea>
-      <div class="flex flex-wrap gap-2 mb-3">
-        <app-pill [clickable]="true" [colorVariant]="4" [selected]="false"
-          >Priority 1</app-pill
-        >
-        <app-pill [clickable]="true" [colorVariant]="3" [selected]="false"
-          >Priority 2</app-pill
-        >
-        <app-pill [clickable]="true" [colorVariant]="2" [selected]="false"
-          >Priority 3</app-pill
-        >
-        <app-pill [clickable]="true" [colorVariant]="1" [selected]="false"
-          >Priority 4</app-pill
-        >
+      @for (task of tasks; track task.id) {
+        <app-task
+          cdkDrag
+          [id]="task.id"
+          [title]="task.title"
+          [description]="task.description"
+        />
+      } @empty {
+        <p>There are no tasks to show...</p>
+      }
+    </div>
+    <div footer>
+      <div class="flex justify-between gap-4">
+        <p>Add Task</p>
+        <button id="toggle-add-task-btn" (click)="toggleAddTask()" class="w-3">
+          @if (addTaskOpened) {
+            <svg
+              class="w-full"
+              width="11"
+              height="11"
+              viewBox="0 0 11 11"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M1.27207 1.25736L9.75736 9.74264M9.75736 1.25736L1.27208 9.74264"
+                stroke="black"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          } @else {
+            <svg
+              class="w-full"
+              width="14"
+              height="15"
+              viewBox="0 0 14 15"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M7 1.5V13.5M13 7.5H1"
+                stroke="black"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          }
+        </button>
       </div>
-      <app-cta-button>SAVE</app-cta-button>
-    </form>
-  </div>
-</app-card>
+      <form
+        class="text-sm overflow-y-hidden h-0"
+        #formRef
+        #formData="ngForm"
+        (ngSubmit)="onSubmit()"
+      >
+        <label for="task-title">Title</label>
+        <input
+          class="w-full border-[1px] border-black rounded-md p-2 mb-3"
+          type="text"
+          name="task-title"
+          id="task-title"
+          placeholder="Task title..."
+          [(ngModel)]="newTaskTitle"
+        />
+        <label for="task-description">Description</label>
+        <textarea
+          class="w-full border-[1px] border-black rounded-md p-2 resize-none mb-2"
+          name="task-description"
+          id="task-description"
+          placeholder="Task description..."
+          [(ngModel)]="newTaskDescription"
+        ></textarea>
+        <div class="flex flex-wrap gap-2 mb-3">
+          <app-pill [clickable]="true" [colorVariant]="4" [selected]="false"
+            >Priority 1</app-pill
+          >
+          <app-pill [clickable]="true" [colorVariant]="3" [selected]="false"
+            >Priority 2</app-pill
+          >
+          <app-pill [clickable]="true" [colorVariant]="2" [selected]="false"
+            >Priority 3</app-pill
+          >
+          <app-pill [clickable]="true" [colorVariant]="1" [selected]="false"
+            >Priority 4</app-pill
+          >
+        </div>
+        <app-cta-button>SAVE</app-cta-button>
+      </form>
+    </div>
+  </app-card>
+</article>

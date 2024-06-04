@@ -8,6 +8,7 @@ import {
   CdkDrag,
   CdkDropList,
   moveItemInArray,
+  CdkDropListGroup,
 } from '@angular/cdk/drag-drop';
 
 export interface Plan {
@@ -31,6 +32,7 @@ export interface Task {
     PlanSettingsComponent,
     CdkDropList,
     CdkDrag,
+    CdkDropListGroup,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
@@ -83,5 +85,7 @@ export class AppComponent {
 
   drop(event: CdkDragDrop<string[]>) {
     moveItemInArray(this.plans, event.previousIndex, event.currentIndex);
+
+    console.log(this.plans);
   }
 }

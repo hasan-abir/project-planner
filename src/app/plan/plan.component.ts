@@ -13,7 +13,14 @@ import { PillComponent } from '../utilities/pill/pill.component';
 import { CommonModule } from '@angular/common';
 import gsap from 'gsap';
 import { TaskComponent } from '../task/task.component';
-import { CdkDrag, CdkDragHandle } from '@angular/cdk/drag-drop';
+import {
+  CdkDrag,
+  CdkDragDrop,
+  CdkDragHandle,
+  CdkDropList,
+  moveItemInArray,
+  transferArrayItem,
+} from '@angular/cdk/drag-drop';
 import { Task } from '../app.component';
 import { FormsModule } from '@angular/forms';
 
@@ -39,6 +46,7 @@ export interface NewTaskValue {
     CtaButtonComponent,
     PillComponent,
     TaskComponent,
+    CdkDropList,
     CdkDrag,
     CdkDragHandle,
     FormsModule,
@@ -90,5 +98,22 @@ export class PlanComponent {
     this.newTaskDescription = '';
 
     this.toggleAddTask();
+  }
+
+  drop(event: CdkDragDrop<Task[]>) {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex,
+      );
+    } else {
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex,
+      );
+    }
   }
 }
