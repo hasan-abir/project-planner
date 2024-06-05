@@ -14,14 +14,13 @@
     cdkDropListGroup
     class="panels flex w-max px-4 sm:px-8 mx-auto gap-4 pb-8"
   >
-    <app-plan-settings (addANewPlan)="addANewPlan()" />
+    <app-plan-settings />
     @for (plan of plans; track plan.id) {
       <app-plan
         class="max-w-[360px] min-w-[280px] flex-1"
         [planId]="plan.id"
         [headerTitle]="plan.title"
         [tasks]="plan.tasks"
-        (addANewTask)="addANewTaskToPlan($event)"
       />
     }
   </section>

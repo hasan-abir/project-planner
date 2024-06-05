@@ -1,10 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PlanComponent } from './plan.component';
+import { TodosService } from '../todos.service';
 
 describe('PlanComponent', () => {
   let component: PlanComponent;
   let fixture: ComponentFixture<PlanComponent>;
+  let service: TodosService;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -12,6 +14,7 @@ describe('PlanComponent', () => {
     }).compileComponents();
 
     fixture = TestBed.createComponent(PlanComponent);
+    service = TestBed.inject(TodosService);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -39,7 +42,7 @@ describe('PlanComponent', () => {
   });
 
   it('should emit addANewTask with parameters on form submit', () => {
-    spyOn(component.addANewTask, 'emit');
+    spyOn(service, 'addANewTaskToPlan');
 
     const planId = '123';
     component.planId = planId;
@@ -60,9 +63,9 @@ describe('PlanComponent', () => {
     form.dispatchEvent(new Event('submit'));
     fixture.detectChanges();
 
-    expect(component.addANewTask.emit).toHaveBeenCalledTimes(1);
-    expect(component.addANewTask.emit).toHaveBeenCalledWith({
-      planId,
+    expect(service.addANewTaskToPlan).toHaveBeenCalledTimes(1);
+    expect(service.addANewTaskToPlan).toHaveBeenCalledWith({
+      id: planId,
       title,
       description,
     });

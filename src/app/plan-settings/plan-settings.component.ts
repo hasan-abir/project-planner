@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component } from '@angular/core';
+import { TodosService } from '../todos.service';
 import { CtaButtonComponent } from '../utilities/cta-button/cta-button.component';
 import { PillComponent } from '../utilities/pill/pill.component';
 
@@ -10,9 +11,9 @@ import { PillComponent } from '../utilities/pill/pill.component';
   styleUrl: './plan-settings.component.css',
 })
 export class PlanSettingsComponent {
-  @Output() addANewPlan: EventEmitter<void> = new EventEmitter<void>();
+  constructor(private service: TodosService) {}
 
   onAddPlanClick() {
-    this.addANewPlan.emit();
+    this.service.addANewPlan();
   }
 }

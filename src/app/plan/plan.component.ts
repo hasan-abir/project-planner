@@ -23,6 +23,7 @@ import {
 } from '@angular/cdk/drag-drop';
 import { Task } from '../app.component';
 import { FormsModule } from '@angular/forms';
+import { TodosService } from '../todos.service';
 
 interface Label {
   id: string;
@@ -61,6 +62,9 @@ export class PlanComponent {
   @Input() tasks: Task[] = [];
   @Output() addANewTask: EventEmitter<NewTaskValue> =
     new EventEmitter<NewTaskValue>();
+
+  constructor(private service: TodosService) {}
+
   newTaskTitle: string = '';
   newTaskDescription: string = '';
 
@@ -88,10 +92,10 @@ export class PlanComponent {
   onSubmit() {
     if (this.newTaskTitle.length === 0) return;
 
-    this.addANewTask.emit({
+    this.service.addANewTaskToPlan({
       title: this.newTaskTitle,
       description: this.newTaskDescription,
-      planId: this.planId,
+      id: this.planId,
     });
 
     this.newTaskTitle = '';

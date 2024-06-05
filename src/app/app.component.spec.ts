@@ -1,15 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppComponent, Plan } from './app.component';
+import { TodosService } from './todos.service';
 
 describe('AppComponent', () => {
   let component: AppComponent;
   let fixture: ComponentFixture<AppComponent>;
+  let service: TodosService;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [AppComponent],
     }).compileComponents();
 
+    service = TestBed.inject(TodosService);
     fixture = TestBed.createComponent(AppComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -35,6 +38,7 @@ describe('AppComponent', () => {
       { id: '1', title: 'Plan 1', tasks: [] },
       { id: '2', title: 'Plan 2', tasks: [] },
     ];
+    component.service.plans = plansArr;
     component.plans = plansArr;
     fixture.detectChanges();
     const compiled = fixture.nativeElement;
@@ -52,10 +56,12 @@ describe('AppComponent', () => {
       { id: '1', title: 'Plan 1', tasks: [] },
       { id: '2', title: 'Plan 2', tasks: [] },
     ];
+    component.service.plans = plansArr;
     component.plans = plansArr;
     fixture.detectChanges();
-    component.addANewPlan();
+    component.service.addANewPlan();
     fixture.detectChanges();
+
     const compiled = fixture.nativeElement;
     const plans = compiled.querySelectorAll('app-plan');
     expect(plans.length).toBe(3);
@@ -73,16 +79,14 @@ describe('AppComponent', () => {
       { id: '1', title: 'Plan 1', tasks: [] },
       { id: '2', title: 'Plan 2', tasks: [] },
     ];
-    component.plans = plansArr;
-    fixture.detectChanges();
+    service.plans = plansArr;
     const newTask = {
-      planId: '2',
+      id: '2',
       title: 'New task',
       description: 'Lorem ipsum',
     };
-    component.addANewTaskToPlan(newTask);
-    fixture.detectChanges();
+    service.addANewTaskToPlan(newTask);
 
-    expect(component.plans[1].tasks.length === 1).toBeTrue();
+    expect(service.plans[1].tasks.length === 1).toBeTrue();
   });
 });

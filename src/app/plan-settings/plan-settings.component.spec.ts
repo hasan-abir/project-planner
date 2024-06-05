@@ -1,10 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PlanSettingsComponent } from './plan-settings.component';
+import { TodosService } from '../todos.service';
 
 describe('PlanSettingsComponent', () => {
   let component: PlanSettingsComponent;
   let fixture: ComponentFixture<PlanSettingsComponent>;
+  let service: TodosService;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -12,6 +14,7 @@ describe('PlanSettingsComponent', () => {
     }).compileComponents();
 
     fixture = TestBed.createComponent(PlanSettingsComponent);
+    service = TestBed.inject(TodosService);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -19,11 +22,11 @@ describe('PlanSettingsComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-  it('should emit addANewPlan on button click', () => {
-    spyOn(component.addANewPlan, 'emit');
+  it('should call the service addANewPlan on button click', () => {
+    spyOn(service, 'addANewPlan');
 
     const compiled = fixture.nativeElement;
     compiled.querySelector('#add-plan-btn').click();
-    expect(component.addANewPlan.emit).toHaveBeenCalledTimes(1);
+    expect(service.addANewPlan).toHaveBeenCalledTimes(1);
   });
 });
