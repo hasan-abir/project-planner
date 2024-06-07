@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { AppComponent, Plan } from './app.component';
-import { TodosService } from './todos.service';
+import { AppComponent } from './app.component';
+import { Plan, TodosService } from './todos.service';
 
 describe('AppComponent', () => {
   let component: AppComponent;
@@ -38,8 +38,7 @@ describe('AppComponent', () => {
       { id: '1', title: 'Plan 1', tasks: [] },
       { id: '2', title: 'Plan 2', tasks: [] },
     ];
-    component.service.plans = plansArr;
-    component.plans = plansArr;
+    service.setPlans(plansArr);
     fixture.detectChanges();
     const compiled = fixture.nativeElement;
     const plans = compiled.querySelectorAll('app-plan');
@@ -56,10 +55,8 @@ describe('AppComponent', () => {
       { id: '1', title: 'Plan 1', tasks: [] },
       { id: '2', title: 'Plan 2', tasks: [] },
     ];
-    component.service.plans = plansArr;
-    component.plans = plansArr;
-    fixture.detectChanges();
-    component.service.addANewPlan();
+    service.setPlans(plansArr);
+    service.addANewPlan();
     fixture.detectChanges();
 
     const compiled = fixture.nativeElement;
@@ -79,14 +76,14 @@ describe('AppComponent', () => {
       { id: '1', title: 'Plan 1', tasks: [] },
       { id: '2', title: 'Plan 2', tasks: [] },
     ];
-    service.plans = plansArr;
+    service.setPlans(plansArr);
     const newTask = {
-      id: '2',
+      planId: '2',
       title: 'New task',
       description: 'Lorem ipsum',
     };
     service.addANewTaskToPlan(newTask);
 
-    expect(service.plans[1].tasks.length === 1).toBeTrue();
+    expect(service.getPlans()[1].tasks.length === 1).toBeTrue();
   });
 });

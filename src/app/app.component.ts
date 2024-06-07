@@ -1,15 +1,16 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { NewTaskValue, PlanComponent } from './plan/plan.component';
-import { PlanSettingsComponent } from './plan-settings/plan-settings.component';
-import { v4 as uuidv4 } from 'uuid';
 import {
-  CdkDragDrop,
   CdkDrag,
+  CdkDragDrop,
   CdkDropList,
-  moveItemInArray,
   CdkDropListGroup,
+  moveItemInArray,
 } from '@angular/cdk/drag-drop';
+import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
+import { Observable, of } from 'rxjs';
+import { PlanSettingsComponent } from './plan-settings/plan-settings.component';
+import { PlanComponent } from './plan/plan.component';
 import { Plan, TodosService } from './todos.service';
 
 @Component({
@@ -17,6 +18,7 @@ import { Plan, TodosService } from './todos.service';
   standalone: true,
   imports: [
     RouterOutlet,
+    CommonModule,
     PlanComponent,
     PlanSettingsComponent,
     CdkDropList,
@@ -26,19 +28,21 @@ import { Plan, TodosService } from './todos.service';
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'project_planner';
   name = 'Hasan Abir';
+  plans$: Observable<Plan[]> = of([]);
 
   constructor(private service: TodosService) {}
 
-  plans: Plan[] = this.service.plans;
+  ngOnInit(): void {
+    this.plans$ = this.service.plans$;
+  }
 
   drop(event: CdkDragDrop<string[]>) {
-    moveItemInArray(
-      this.service.plans,
-      event.previousIndex,
-      event.currentIndex,
-    );
+    const plans = this.service.getPlans();
+    moveItemInArray(plans, event.previousIndex, event.currentIndex);
+
+    this.service.setPlans(plans);
   }
 }

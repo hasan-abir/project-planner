@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { PillComponent } from '../utilities/pill/pill.component';
 import { EditableTitleComponent } from '../utilities/editable-title/editable-title.component';
 import { CdkDrag, CdkDragHandle } from '@angular/cdk/drag-drop';
+import { TodosService } from '../todos.service';
 
 @Component({
   selector: 'app-task',
@@ -11,6 +12,14 @@ import { CdkDrag, CdkDragHandle } from '@angular/cdk/drag-drop';
   styleUrl: './task.component.css',
 })
 export class TaskComponent {
+  @Input() taskId: string = '';
+  @Input() planId: string = '';
   @Input() title: string = '';
   @Input() description: string = '';
+
+  constructor(private service: TodosService) {}
+
+  onDelete() {
+    this.service.deleteTaskFromPlan(this.planId, this.taskId);
+  }
 }

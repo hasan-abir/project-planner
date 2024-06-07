@@ -21,9 +21,8 @@ import {
   moveItemInArray,
   transferArrayItem,
 } from '@angular/cdk/drag-drop';
-import { Task } from '../app.component';
 import { FormsModule } from '@angular/forms';
-import { TodosService } from '../todos.service';
+import { Task, TodosService } from '../todos.service';
 
 interface Label {
   id: string;
@@ -95,13 +94,17 @@ export class PlanComponent {
     this.service.addANewTaskToPlan({
       title: this.newTaskTitle,
       description: this.newTaskDescription,
-      id: this.planId,
+      planId: this.planId,
     });
 
     this.newTaskTitle = '';
     this.newTaskDescription = '';
 
     this.toggleAddTask();
+  }
+
+  onDelete() {
+    this.service.deletePlan(this.planId);
   }
 
   drop(event: CdkDragDrop<Task[]>) {

@@ -65,7 +65,7 @@ describe('PlanComponent', () => {
 
     expect(service.addANewTaskToPlan).toHaveBeenCalledTimes(1);
     expect(service.addANewTaskToPlan).toHaveBeenCalledWith({
-      id: planId,
+      planId,
       title,
       description,
     });
@@ -83,5 +83,19 @@ describe('PlanComponent', () => {
     fixture.detectChanges();
 
     expect(component.addANewTask.emit).toHaveBeenCalledTimes(0);
+  });
+  it('should emit deletePlan()', () => {
+    const planId = '123';
+    component.planId = planId;
+    fixture.detectChanges();
+    spyOn(service, 'deletePlan');
+
+    const compiled = fixture.nativeElement;
+    const btn = compiled.querySelector('#delete-plan-btn');
+
+    btn.click();
+
+    expect(service.deletePlan).toHaveBeenCalledTimes(1);
+    expect(service.deletePlan).toHaveBeenCalledWith(planId);
   });
 });
