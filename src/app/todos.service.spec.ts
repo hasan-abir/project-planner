@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { TodosService } from './todos.service';
+import { ColorVariant, Label, Plan, TodosService } from './todos.service';
 
 describe('TodosService', () => {
   let service: TodosService;
@@ -26,7 +26,7 @@ describe('TodosService', () => {
   });
 
   it('should delete a plan', () => {
-    const plans = [
+    const plans: Plan[] = [
       { id: '1', title: 'Plan 1', tasks: [] },
       { id: '2', title: 'Plan 2', tasks: [] },
     ];
@@ -56,7 +56,7 @@ describe('TodosService', () => {
   });
 
   it('should delete a task', () => {
-    const plans = [
+    const plans: Plan[] = [
       {
         id: '1',
         title: 'Plan 1',
@@ -67,5 +67,50 @@ describe('TodosService', () => {
     service.setPlans(plans);
     service.deleteTaskFromPlan(plans[0].id, plans[0].tasks[0].id);
     expect(service.getPlans()[0].tasks.length).toBe(0);
+  });
+
+  it('should add a label', () => {
+    const labels: Label[] = [
+      {
+        id: '1',
+        name: 'Label 1',
+        colorVariant: 1,
+      },
+      {
+        id: '2',
+        name: 'Label 2',
+        colorVariant: 3,
+      },
+    ];
+
+    const newLabel: { name: string; colorVariant: ColorVariant } = {
+      name: 'Label 3',
+      colorVariant: 4,
+    };
+
+    service.setLabels(labels);
+    service.addNewLabel(newLabel.name, newLabel.colorVariant);
+    expect(service.getLabels().length).toBe(3);
+    expect(service.getLabels()[2].name).toBe(newLabel.name);
+  });
+
+  it('should delete a label', () => {
+    const labels: Label[] = [
+      {
+        id: '1',
+        name: 'Label 1',
+        colorVariant: 1,
+      },
+      {
+        id: '2',
+        name: 'Label 2',
+        colorVariant: 3,
+      },
+    ];
+
+    service.setLabels(labels);
+    service.deleteLabel(labels[0].id);
+    expect(service.getLabels().length).toBe(1);
+    expect(service.getLabels()[0].name).toBe(labels[1].name);
   });
 });

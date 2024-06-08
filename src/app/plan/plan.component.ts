@@ -24,12 +24,6 @@ import {
 import { FormsModule } from '@angular/forms';
 import { Task, TodosService } from '../todos.service';
 
-interface Label {
-  id: string;
-  name: string;
-  priority: number;
-}
-
 export interface NewTaskValue {
   title: string;
   description: string;

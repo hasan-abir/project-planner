@@ -19,23 +19,6 @@ describe('PillComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-  it('should have pointer cursor', () => {
-    component.clickable = true;
-    fixture.detectChanges();
-
-    const el = fixture.nativeElement.querySelector('.cursor-pointer');
-
-    expect(el).toBeTruthy();
-  });
-  it('should have a ring', () => {
-    component.clickable = true;
-    component.selected = true;
-    fixture.detectChanges();
-
-    const el = fixture.nativeElement.querySelector('.ring-2');
-
-    expect(el).toBeTruthy();
-  });
   it('should have a smaller text', () => {
     component.small = true;
     fixture.detectChanges();
@@ -80,5 +63,16 @@ describe('PillComponent', () => {
     const el = fixture.nativeElement.querySelector('#close-icon');
 
     expect(el).toBeTruthy();
+  });
+
+  it('should emit onDelete()', () => {
+    spyOn(component.onDelete, 'emit');
+    component.close = true;
+    fixture.detectChanges();
+
+    const el = fixture.nativeElement.querySelector('#close-icon');
+    el.click();
+
+    expect(component.onDelete.emit).toHaveBeenCalledTimes(1);
   });
 });

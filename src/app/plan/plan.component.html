@@ -147,18 +147,10 @@
           [(ngModel)]="newTaskDescription"
         ></textarea>
         <div class="flex flex-wrap gap-2 mb-3">
-          <app-pill [clickable]="true" [colorVariant]="4" [selected]="false"
-            >Priority 1</app-pill
-          >
-          <app-pill [clickable]="true" [colorVariant]="3" [selected]="false"
-            >Priority 2</app-pill
-          >
-          <app-pill [clickable]="true" [colorVariant]="2" [selected]="false"
-            >Priority 3</app-pill
-          >
-          <app-pill [clickable]="true" [colorVariant]="1" [selected]="false"
-            >Priority 4</app-pill
-          >
+          <app-pill [colorVariant]="4">Priority 1</app-pill>
+          <app-pill [colorVariant]="3">Priority 2</app-pill>
+          <app-pill [colorVariant]="2">Priority 3</app-pill>
+          <app-pill [colorVariant]="1">Priority 4</app-pill>
         </div>
         <app-cta-button>SAVE</app-cta-button>
       </form>

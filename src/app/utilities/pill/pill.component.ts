@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-pill',
@@ -9,9 +9,14 @@ import { Component, Input } from '@angular/core';
   styleUrl: './pill.component.css',
 })
 export class PillComponent {
-  @Input() clickable: boolean = false;
   @Input() colorVariant: number = 1;
-  @Input() selected: boolean = false;
   @Input() small: boolean = false;
   @Input() close: boolean = false;
+  @Output() onDelete: EventEmitter<void> = new EventEmitter<void>();
+
+  constructor() {}
+
+  onCloseClick() {
+    this.onDelete.emit();
+  }
 }
