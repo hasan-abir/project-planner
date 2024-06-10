@@ -3,6 +3,7 @@ import {
   ElementRef,
   EventEmitter,
   Input,
+  OnInit,
   Output,
   ViewChild,
 } from '@angular/core';
@@ -22,7 +23,8 @@ import {
   transferArrayItem,
 } from '@angular/cdk/drag-drop';
 import { FormsModule } from '@angular/forms';
-import { Task, TodosService } from '../todos.service';
+import { Label, Task, TodosService } from '../todos.service';
+import { Observable, of } from 'rxjs';
 
 export interface NewTaskValue {
   title: string;
@@ -48,7 +50,7 @@ export interface NewTaskValue {
   templateUrl: './plan.component.html',
   styleUrl: './plan.component.css',
 })
-export class PlanComponent {
+export class PlanComponent implements OnInit {
   @ViewChild('formRef') formRef?: ElementRef;
   @Input() planId: string = '';
   @Input() headerTitle: string = '';
@@ -60,8 +62,14 @@ export class PlanComponent {
 
   newTaskTitle: string = '';
   newTaskDescription: string = '';
+  labels$: Observable<Label[]> = of([]);
+  selectedLabels: string[] = [];
 
   addTaskOpened: boolean = false;
+
+  ngOnInit(): void {
+    this.labels$ = this.service.labels$;
+  }
 
   toggleAddTask() {
     const defaultDuration = 0.25;
@@ -99,6 +107,14 @@ export class PlanComponent {
 
   onDelete() {
     this.service.deletePlan(this.planId);
+  }
+
+  addOrRemoveLabel(id: string) {
+    if (this.selectedLabels.includes(id)) {
+      this.selectedLabels = this.selectedLabels.filter((item) => item !== id);
+    } else {
+      this.selectedLabels.push(id);
+    }
   }
 
   drop(event: CdkDragDrop<Task[]>) {

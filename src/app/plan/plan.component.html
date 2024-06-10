@@ -146,11 +146,16 @@
           placeholder="Task description..."
           [(ngModel)]="newTaskDescription"
         ></textarea>
-        <div class="flex flex-wrap gap-2 mb-3">
-          <app-pill [colorVariant]="4">Priority 1</app-pill>
-          <app-pill [colorVariant]="3">Priority 2</app-pill>
-          <app-pill [colorVariant]="2">Priority 3</app-pill>
-          <app-pill [colorVariant]="1">Priority 4</app-pill>
+        <div class="flex flex-wrap gap-2 mx-1 mb-3">
+          @for (label of labels$ | async; track label.id) {
+            <app-pill
+              class="cursor-pointer"
+              (click)="addOrRemoveLabel(label.id)"
+              [selected]="selectedLabels.includes(label.id)"
+              [colorVariant]="label.colorVariant"
+              >{{ label.name }}</app-pill
+            >
+          }
         </div>
         <app-cta-button>SAVE</app-cta-button>
       </form>

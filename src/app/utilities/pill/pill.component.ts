@@ -10,6 +10,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 })
 export class PillComponent {
   @Input() colorVariant: number = 1;
+  @Input() selected: boolean = false;
   @Input() small: boolean = false;
   @Input() close: boolean = false;
   @Output() onDelete: EventEmitter<void> = new EventEmitter<void>();

@@ -37,7 +37,7 @@ export class TodosService {
   public plans$: Observable<Plan[]> = this.plansSubject.asObservable();
 
   constructor() {
-    this.plansSubject.next([
+    this.setPlans([
       {
         id: uuidv4(),
         title: 'Todo',
@@ -63,6 +63,29 @@ export class TodosService {
       { id: uuidv4(), title: 'In Progress', tasks: [] },
       { id: uuidv4(), title: 'Done', tasks: [] },
       { id: uuidv4(), title: 'Later', tasks: [] },
+    ]);
+
+    this.setLabels([
+      {
+        id: uuidv4(),
+        name: 'Priority 1',
+        colorVariant: 4,
+      },
+      {
+        id: uuidv4(),
+        name: 'Priority 2',
+        colorVariant: 3,
+      },
+      {
+        id: uuidv4(),
+        name: 'Priority 3',
+        colorVariant: 2,
+      },
+      {
+        id: uuidv4(),
+        name: 'Priority 4',
+        colorVariant: 1,
+      },
     ]);
   }
 

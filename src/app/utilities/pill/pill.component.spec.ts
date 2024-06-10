@@ -19,6 +19,14 @@ describe('PillComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+  it('should have a ring around', () => {
+    component.selected = true;
+    fixture.detectChanges();
+
+    const el = fixture.nativeElement.querySelector('span');
+
+    expect(el.classList.contains('ring-2')).toBeTrue();
+  });
   it('should have a smaller text', () => {
     component.small = true;
     fixture.detectChanges();

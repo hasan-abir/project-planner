@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PlanComponent } from './plan.component';
-import { TodosService } from '../todos.service';
+import { Label, TodosService } from '../todos.service';
 
 describe('PlanComponent', () => {
   let component: PlanComponent;
@@ -97,5 +97,26 @@ describe('PlanComponent', () => {
 
     expect(service.deletePlan).toHaveBeenCalledTimes(1);
     expect(service.deletePlan).toHaveBeenCalledWith(planId);
+  });
+
+  it('should add or remove labels', () => {
+    const labels: Label[] = [
+      { id: '123', name: 'Label 1', colorVariant: 2 },
+      { id: '321', name: 'Label 2', colorVariant: 3 },
+      { id: '213', name: 'Label 3', colorVariant: 1 },
+    ];
+    service.setLabels(labels);
+    fixture.detectChanges();
+
+    const compiled = fixture.nativeElement;
+    const pills = compiled.querySelectorAll('app-pill');
+
+    expect(pills.length).toBe(3);
+    pills[0].click();
+    fixture.detectChanges();
+    expect(component.selectedLabels.length).toBe(1);
+    pills[0].click();
+    fixture.detectChanges();
+    expect(component.selectedLabels.length).toBe(0);
   });
 });
