@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { PillComponent } from '../utilities/pill/pill.component';
 import { EditableTitleComponent } from '../utilities/editable-title/editable-title.component';
 import { CdkDrag, CdkDragHandle } from '@angular/cdk/drag-drop';
-import { TodosService } from '../todos.service';
+import { Label, TodosService } from '../todos.service';
 
 @Component({
   selector: 'app-task',
@@ -16,6 +16,7 @@ export class TaskComponent {
   @Input() planId: string = '';
   @Input() title: string = '';
   @Input() description: string = '';
+  @Input() labels: Label[] = [];
 
   constructor(private service: TodosService) {}
 

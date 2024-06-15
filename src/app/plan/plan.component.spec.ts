@@ -68,6 +68,7 @@ describe('PlanComponent', () => {
       planId,
       title,
       description,
+      labelIds: [],
     });
   });
 

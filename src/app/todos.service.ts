@@ -20,6 +20,7 @@ export interface Task {
   id: string;
   title: string;
   description: string;
+  labels: Label[];
 }
 
 @Injectable({
@@ -37,34 +38,6 @@ export class TodosService {
   public plans$: Observable<Plan[]> = this.plansSubject.asObservable();
 
   constructor() {
-    this.setPlans([
-      {
-        id: uuidv4(),
-        title: 'Todo',
-        tasks: [
-          {
-            id: uuidv4(),
-            title: 'I just came',
-            description: 'Do you trust me?',
-          },
-          {
-            id: uuidv4(),
-            title: 'Hey Mama',
-            description:
-              "I know I act a fool. If I had gone back to school, I wouldn't be no Ye",
-          },
-          {
-            id: uuidv4(),
-            title: "Can't tell me",
-            description: "I've always been this way. Can't tell me better",
-          },
-        ],
-      },
-      { id: uuidv4(), title: 'In Progress', tasks: [] },
-      { id: uuidv4(), title: 'Done', tasks: [] },
-      { id: uuidv4(), title: 'Later', tasks: [] },
-    ]);
-
     this.setLabels([
       {
         id: uuidv4(),
@@ -87,6 +60,37 @@ export class TodosService {
         colorVariant: 1,
       },
     ]);
+
+    this.setPlans([
+      {
+        id: uuidv4(),
+        title: 'Todo',
+        tasks: [
+          {
+            id: uuidv4(),
+            title: 'I just came',
+            description: 'Do you trust me?',
+            labels: [{ ...this.getLabels()[0] }],
+          },
+          {
+            id: uuidv4(),
+            title: 'Hey Mama',
+            description:
+              "I know I act a fool. If I had gone back to school, I wouldn't be no Ye",
+            labels: [{ ...this.getLabels()[1] }, { ...this.getLabels()[2] }],
+          },
+          {
+            id: uuidv4(),
+            title: "Can't tell me",
+            description: "I've always been this way. Can't tell me better",
+            labels: [],
+          },
+        ],
+      },
+      { id: uuidv4(), title: 'In Progress', tasks: [] },
+      { id: uuidv4(), title: 'Done', tasks: [] },
+      { id: uuidv4(), title: 'Later', tasks: [] },
+    ]);
   }
 
   addANewPlan() {
@@ -104,12 +108,25 @@ export class TodosService {
     planId: string;
     title: string;
     description: string;
+    labelIds: string[];
   }) {
     const updatedPlans = this.getPlans();
     const newTask: Task = {
       id: uuidv4(),
       title: taskData.title,
       description: taskData.description,
+      labels: taskData.labelIds
+        .filter((item) =>
+          this.getLabels()
+            .map((label) => label.id)
+            .includes(item),
+        )
+        .map((item) => {
+          const index = this.getLabels().findIndex(
+            (label) => label.id === item,
+          );
+          return this.getLabels()[index];
+        }),
     };
     const index = updatedPlans.findIndex((item) => item.id === taskData.planId);
     let currentPlan = updatedPlans[index];
@@ -144,6 +161,20 @@ export class TodosService {
     const updatedLabels = this.getLabels().filter((item) => item.id !== id);
 
     this.setLabels(updatedLabels);
+
+    const updatedPlans = this.getPlans().map((plan) => {
+      let tasks = plan.tasks;
+
+      tasks = tasks.map((task) => {
+        const updatedLabels = task.labels.filter((label) => label.id !== id);
+
+        return { ...task, labels: updatedLabels };
+      });
+
+      return { ...plan, tasks };
+    });
+
+    this.setPlans(updatedPlans);
   }
 
   setPlans(plans: Plan[]) {

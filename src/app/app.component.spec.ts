@@ -81,6 +81,7 @@ describe('AppComponent', () => {
       planId: '2',
       title: 'New task',
       description: 'Lorem ipsum',
+      labelIds: [],
     };
     service.addANewTaskToPlan(newTask);
 

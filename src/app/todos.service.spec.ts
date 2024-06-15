@@ -41,10 +41,15 @@ describe('TodosService', () => {
       { id: '1', title: 'Plan 1', tasks: [] },
       { id: '2', title: 'Plan 2', tasks: [] },
     ]);
+    service.setLabels([
+      { id: '1', name: 'Label 1', colorVariant: 2 },
+      { id: '2', name: 'Label 2', colorVariant: 1 },
+    ]);
     const newTask = {
       planId: '2',
       title: 'New task',
       description: 'Lorem',
+      labelIds: ['1'],
     };
 
     service.addANewTaskToPlan(newTask);
@@ -53,6 +58,8 @@ describe('TodosService', () => {
     expect(service.getPlans()[1].tasks[0].description).toBe(
       newTask.description,
     );
+    expect(service.getPlans()[1].tasks[0].labels.length).toBe(1);
+    expect(service.getPlans()[1].tasks[0].labels[0].id).toBe('1');
   });
 
   it('should delete a task', () => {
@@ -60,7 +67,7 @@ describe('TodosService', () => {
       {
         id: '1',
         title: 'Plan 1',
-        tasks: [{ id: '1', title: 'Task 1', description: 'Lorem' }],
+        tasks: [{ id: '1', title: 'Task 1', description: 'Lorem', labels: [] }],
       },
       { id: '2', title: 'Plan 2', tasks: [] },
     ];
@@ -107,9 +114,26 @@ describe('TodosService', () => {
         colorVariant: 3,
       },
     ];
+    const plans: Plan[] = [
+      {
+        id: '1',
+        title: 'Plan 1',
+        tasks: [
+          {
+            id: '1',
+            title: 'Task 1',
+            description: '',
+            labels: [{ ...labels[0] }],
+          },
+        ],
+      },
+    ];
 
     service.setLabels(labels);
+    service.setPlans(plans);
+    expect(service.getPlans()[0].tasks[0].labels.length).toBe(1);
     service.deleteLabel(labels[0].id);
+    expect(service.getPlans()[0].tasks[0].labels.length).toBe(0);
     expect(service.getLabels().length).toBe(1);
     expect(service.getLabels()[0].name).toBe(labels[1].name);
   });

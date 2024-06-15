@@ -97,10 +97,12 @@ export class PlanComponent implements OnInit {
       title: this.newTaskTitle,
       description: this.newTaskDescription,
       planId: this.planId,
+      labelIds: this.selectedLabels,
     });
 
     this.newTaskTitle = '';
     this.newTaskDescription = '';
+    this.selectedLabels = [];
 
     this.toggleAddTask();
   }
