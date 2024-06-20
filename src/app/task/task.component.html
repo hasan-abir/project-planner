@@ -28,12 +28,13 @@
       </svg>
     </button>
   </div>
-  <app-editable-title [textContent]="title" />
+  <app-editable-title [textContent]="title" (afterEdit)="onEditTitle($event)" />
   @if (description.length > 0) {
     <app-editable-title
       [multitext]="true"
       [textClasses]="'text-xs'"
       [textContent]="description"
+      (afterEdit)="onEditDescription($event)"
     />
   }
 </div>

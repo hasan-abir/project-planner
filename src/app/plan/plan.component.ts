@@ -111,6 +111,10 @@ export class PlanComponent implements OnInit {
     this.service.deletePlan(this.planId);
   }
 
+  onEdit(title: string) {
+    this.service.editPlan(this.planId, { title });
+  }
+
   addOrRemoveLabel(id: string) {
     if (this.selectedLabels.includes(id)) {
       this.selectedLabels = this.selectedLabels.filter((item) => item !== id);

@@ -85,6 +85,17 @@ describe('PlanComponent', () => {
 
     expect(component.addANewTask.emit).toHaveBeenCalledTimes(0);
   });
+  it('should emit editPlan()', () => {
+    const planId = '123';
+    const title = 'Example';
+    component.planId = planId;
+    fixture.detectChanges();
+    spyOn(service, 'editPlan');
+
+    component.onEdit(title);
+    expect(service.editPlan).toHaveBeenCalledTimes(1);
+    expect(service.editPlan).toHaveBeenCalledWith(planId, { title });
+  });
   it('should emit deletePlan()', () => {
     const planId = '123';
     component.planId = planId;

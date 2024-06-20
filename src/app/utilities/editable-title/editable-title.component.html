@@ -1,31 +1,47 @@
 @if (textboxOpen) {
-  @if (multitext) {
-    <textarea
-      [ngClass]="'rounded-lg w-full p-2 ' + textClasses"
-      name="editable-text"
-      #textbox
-      cols="5"
-      [(ngModel)]="textContent"
-      (focusout)="textboxFocusout()"
-    ></textarea>
-  } @else {
-    <input
-      [ngClass]="'rounded-lg w-full p-2 ' + textClasses"
-      type="text"
-      #textbox
-      name="editable-text"
-      [(ngModel)]="textContent"
-      (focusout)="textboxFocusout()"
-    />
-  }
+  <form #formData="ngForm" (ngSubmit)="onSubmit()">
+    @if (multitext) {
+      <textarea
+        [ngClass]="'rounded-lg w-full p-2 ' + textClasses"
+        class="ring-2 ring-black"
+        id="editable-multitext"
+        name="editable-multitext"
+        #textbox
+        cols="5"
+        [(ngModel)]="textContent"
+      ></textarea>
+      <div class="flex justify-between gap-2">
+        <button
+          id="close-textarea"
+          type="button"
+          (click)="textboxFocusout()"
+          class="text-xs rounded-md w-full p-2 bg-white border-[1px] border-black"
+        >
+          CANCEL
+        </button>
+        <app-cta-button [small]="true" class="w-full">SAVE</app-cta-button>
+      </div>
+    } @else {
+      <input
+        [ngClass]="'rounded-lg w-full p-2 ' + textClasses"
+        class="ring-2 ring-black"
+        type="text"
+        #textbox
+        id="editable-text"
+        name="editable-text"
+        [(ngModel)]="textContent"
+        (focusout)="textboxFocusout()"
+      />
+    }
+  </form>
 } @else {
   @if (multitext) {
     <p (click)="toggleTextbox(true)" class="opacity-70" [ngClass]="textClasses">
-      {{ textContent }}
+      {{ initialText }}
     </p>
   } @else {
     <h2 (click)="toggleTextbox(true)" [ngClass]="textClasses">
-      {{ textContent }}
+      {{ initialText }}
     </h2>
   }
 }

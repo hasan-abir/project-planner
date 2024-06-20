@@ -43,6 +43,7 @@
         class="flex-1"
         [textClasses]="'text-center text-lg sm:text-xl'"
         [textContent]="headerTitle"
+        (afterEdit)="onEdit($event)"
       />
       <button id="delete-plan-btn" class="w-4" (click)="onDelete()">
         <svg

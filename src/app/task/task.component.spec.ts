@@ -51,6 +51,40 @@ describe('TaskComponent', () => {
     );
     expect(pills.length).toBe(2);
   });
+  it('should emit editTaskInPlan() with title', () => {
+    const planId = '123';
+    const taskId = '321';
+    const title = 'Example';
+    component.planId = planId;
+    component.taskId = taskId;
+    fixture.detectChanges();
+    spyOn(service, 'editTaskInPlan');
+
+    component.onEditTitle(title);
+    fixture.detectChanges();
+
+    expect(service.editTaskInPlan).toHaveBeenCalledTimes(1);
+    expect(service.editTaskInPlan).toHaveBeenCalledWith(planId, taskId, {
+      title,
+    });
+  });
+  it('should emit editTaskInPlan() with with description', () => {
+    const planId = '123';
+    const taskId = '321';
+    const description = 'Example';
+    component.planId = planId;
+    component.taskId = taskId;
+    fixture.detectChanges();
+    spyOn(service, 'editTaskInPlan');
+
+    component.onEditDescription(description);
+    fixture.detectChanges();
+
+    expect(service.editTaskInPlan).toHaveBeenCalledTimes(1);
+    expect(service.editTaskInPlan).toHaveBeenCalledWith(planId, taskId, {
+      description,
+    });
+  });
   it('should emit deleteATaskFromPlan()', () => {
     const planId = '123';
     const taskId = '321';

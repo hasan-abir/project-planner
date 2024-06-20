@@ -23,4 +23,12 @@ export class TaskComponent {
   onDelete() {
     this.service.deleteTaskFromPlan(this.planId, this.taskId);
   }
+
+  onEditTitle(title: string) {
+    this.service.editTaskInPlan(this.planId, this.taskId, { title });
+  }
+
+  onEditDescription(description: string) {
+    this.service.editTaskInPlan(this.planId, this.taskId, { description });
+  }
 }

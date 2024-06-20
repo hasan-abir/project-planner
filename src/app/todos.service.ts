@@ -104,6 +104,15 @@ export class TodosService {
     this.setPlans(updatedPlans);
   }
 
+  editPlan(id: string, editData: { title: string }) {
+    const updatedPlans = this.getPlans();
+    const index = updatedPlans.findIndex((item) => item.id === id);
+
+    updatedPlans[index].title = editData.title;
+
+    this.setPlans(updatedPlans);
+  }
+
   addANewTaskToPlan(taskData: {
     planId: string;
     title: string;
@@ -146,6 +155,36 @@ export class TodosService {
       ...currentPlan,
       tasks: currentPlan.tasks.filter((item) => item.id !== taskId),
     };
+
+    this.setPlans(updatedPlans);
+  }
+
+  editTaskInPlan(
+    planId: string,
+    taskId: string,
+    editData: { title?: string; description?: string },
+  ) {
+    const updatedPlans = this.getPlans();
+    const planIndex = updatedPlans.findIndex((item) => item.id === planId);
+    const currentPlan = updatedPlans[planIndex];
+    const taskIndex = currentPlan.tasks.findIndex((item) => item.id === taskId);
+    let tasks = currentPlan.tasks;
+
+    if (editData.title) {
+      tasks[taskIndex].title = editData.title;
+      updatedPlans[planIndex] = {
+        ...currentPlan,
+        tasks,
+      };
+    }
+
+    if (editData.description) {
+      tasks[taskIndex].description = editData.description;
+      updatedPlans[planIndex] = {
+        ...currentPlan,
+        tasks,
+      };
+    }
 
     this.setPlans(updatedPlans);
   }

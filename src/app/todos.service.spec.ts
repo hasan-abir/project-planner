@@ -25,6 +25,17 @@ describe('TodosService', () => {
     expect(service.getPlans()[0].tasks.length).toBe(0);
   });
 
+  it('should edit a plan', () => {
+    const plans: Plan[] = [
+      { id: '1', title: 'Plan 1', tasks: [] },
+      { id: '2', title: 'Plan 2', tasks: [] },
+    ];
+    service.setPlans(plans);
+    const title = 'Example';
+    service.editPlan(plans[1].id, { title });
+    expect(service.getPlans()[1].title).toBe(title);
+  });
+
   it('should delete a plan', () => {
     const plans: Plan[] = [
       { id: '1', title: 'Plan 1', tasks: [] },
@@ -60,6 +71,26 @@ describe('TodosService', () => {
     );
     expect(service.getPlans()[1].tasks[0].labels.length).toBe(1);
     expect(service.getPlans()[1].tasks[0].labels[0].id).toBe('1');
+  });
+
+  it('should edit a task', () => {
+    const plans: Plan[] = [
+      {
+        id: '1',
+        title: 'Plan 1',
+        tasks: [{ id: '1', title: 'Task 1', description: 'Lorem', labels: [] }],
+      },
+      { id: '2', title: 'Plan 2', tasks: [] },
+    ];
+    const title = 'Example';
+    const description = 'Lorem';
+    service.setPlans(plans);
+    service.editTaskInPlan(plans[0].id, plans[0].tasks[0].id, {
+      title,
+      description,
+    });
+    expect(service.getPlans()[0].tasks[0].title).toBe(title);
+    expect(service.getPlans()[0].tasks[0].description).toBe(description);
   });
 
   it('should delete a task', () => {
