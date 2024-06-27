@@ -69,7 +69,7 @@ export class TodosService {
           {
             id: uuidv4(),
             title: 'I just came',
-            description: 'Do you trust me?',
+            description: '',
             labels: [{ ...this.getLabels()[0] }],
           },
           {
@@ -162,7 +162,7 @@ export class TodosService {
   editTaskInPlan(
     planId: string,
     taskId: string,
-    editData: { title?: string; description?: string },
+    editData: { title?: string; description?: string; labelIds?: string[] },
   ) {
     const updatedPlans = this.getPlans();
     const planIndex = updatedPlans.findIndex((item) => item.id === planId);
@@ -180,6 +180,24 @@ export class TodosService {
 
     if (editData.description) {
       tasks[taskIndex].description = editData.description;
+      updatedPlans[planIndex] = {
+        ...currentPlan,
+        tasks,
+      };
+    }
+
+    if (editData.labelIds) {
+      const newLabels: Label[] = [];
+
+      editData.labelIds.forEach((id) => {
+        const labelFound: Label | undefined = this.getLabels().find(
+          (item) => item.id === id,
+        );
+        if (labelFound) {
+          newLabels.push(labelFound);
+        }
+      });
+      tasks[taskIndex].labels = newLabels;
       updatedPlans[planIndex] = {
         ...currentPlan,
         tasks,

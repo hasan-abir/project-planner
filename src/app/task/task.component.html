@@ -2,11 +2,73 @@
   class="bg-white p-4 border-[1px] flex flex-col gap-2 border-gray-200 rounded-md"
 >
   <div class="flex items-start justify-between gap-2 mb-2">
-    <div class="flex flex-wrap gap-1">
-      @for (label of labels; track label.id) {
-        <app-pill [colorVariant]="label.colorVariant" [small]="true">{{
-          label.name
-        }}</app-pill>
+    <div>
+      @if (editLabels) {
+        <form
+          id="edit-labels-form"
+          #formData="ngForm"
+          (ngSubmit)="onEditLabels()"
+        >
+          <div id="edit-labels" class="flex flex-wrap gap-2 mx-1 mb-3">
+            @for (label of globalLabels$ | async; track label.id) {
+              <app-pill
+                class="cursor-pointer"
+                [small]="true"
+                [selected]="selectedLabels.includes(label.id)"
+                [colorVariant]="label.colorVariant"
+                (click)="addOrRemoveLabel(label.id)"
+                >{{ label.name }}</app-pill
+              >
+            }
+          </div>
+          <div class="flex justify-between gap-2">
+            <button
+              id="close-labels-edit"
+              type="button"
+              (click)="toggleEditLabels(false)"
+              class="text-xs rounded-md w-full p-2 bg-white border-[1px] border-black"
+            >
+              CANCEL
+            </button>
+            <app-cta-button [small]="true" class="w-full">SAVE</app-cta-button>
+          </div>
+        </form>
+      } @else {
+        <div
+          id="labels-group"
+          class="flex flex-wrap gap-1"
+          (click)="toggleEditLabels(true)"
+        >
+          @for (label of labels; track label.id) {
+            <app-pill [colorVariant]="label.colorVariant" [small]="true">{{
+              label.name
+            }}</app-pill>
+          } @empty {
+            <button
+              id="add-labels"
+              class="flex w-max items-center gap-1"
+              (click)="toggleEditLabels(true)"
+            >
+              <svg
+                class="w-4"
+                width="14"
+                height="15"
+                viewBox="0 0 14 15"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M7 1.5V13.5M13 7.5H1"
+                  stroke="black"
+                  stroke-width="1"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+              <span class="text-xs">Add Labels</span>
+            </button>
+          }
+        </div>
       }
     </div>
     <button id="delete-task-btn" class="w-3" (click)="onDelete()">
@@ -36,5 +98,29 @@
       [textContent]="description"
       (afterEdit)="onEditDescription($event)"
     />
+  } @else {
+    <button
+      id="add-description"
+      class="flex w-max items-center gap-1"
+      (click)="onEditDescription('Your description')"
+    >
+      <svg
+        class="w-4"
+        width="14"
+        height="15"
+        viewBox="0 0 14 15"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M7 1.5V13.5M13 7.5H1"
+          stroke="black"
+          stroke-width="1"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
+      <span class="text-xs">Add Description</span>
+    </button>
   }
 </div>

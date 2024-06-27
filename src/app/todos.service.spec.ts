@@ -74,6 +74,10 @@ describe('TodosService', () => {
   });
 
   it('should edit a task', () => {
+    service.setLabels([
+      { id: '1', name: 'Label 1', colorVariant: 2 },
+      { id: '2', name: 'Label 2', colorVariant: 1 },
+    ]);
     const plans: Plan[] = [
       {
         id: '1',
@@ -84,13 +88,16 @@ describe('TodosService', () => {
     ];
     const title = 'Example';
     const description = 'Lorem';
+    const labelIds = ['1', '2'];
     service.setPlans(plans);
     service.editTaskInPlan(plans[0].id, plans[0].tasks[0].id, {
       title,
       description,
+      labelIds,
     });
     expect(service.getPlans()[0].tasks[0].title).toBe(title);
     expect(service.getPlans()[0].tasks[0].description).toBe(description);
+    expect(service.getPlans()[0].tasks[0].labels.length).toBe(labelIds.length);
   });
 
   it('should delete a task', () => {

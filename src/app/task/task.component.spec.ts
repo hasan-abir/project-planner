@@ -1,7 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TaskComponent } from './task.component';
-import { TodosService } from '../todos.service';
+import { Label, TodosService } from '../todos.service';
+import { By } from '@angular/platform-browser';
 
 describe('TaskComponent', () => {
   let component: TaskComponent;
@@ -68,7 +69,7 @@ describe('TaskComponent', () => {
       title,
     });
   });
-  it('should emit editTaskInPlan() with with description', () => {
+  it('should emit editTaskInPlan() with description', () => {
     const planId = '123';
     const taskId = '321';
     const description = 'Example';
@@ -83,6 +84,98 @@ describe('TaskComponent', () => {
     expect(service.editTaskInPlan).toHaveBeenCalledTimes(1);
     expect(service.editTaskInPlan).toHaveBeenCalledWith(planId, taskId, {
       description,
+    });
+    expect(component.description).toBe(description);
+  });
+  it('should add a sample description when there are not any', () => {
+    const addDescriptionBtn = fixture.debugElement.query(
+      By.css('#add-description'),
+    );
+    addDescriptionBtn.nativeElement.click();
+    fixture.detectChanges();
+    expect(component.description.length > 0).toBeTrue();
+  });
+  it('should open edit label menu', () => {
+    const labelsGroup = fixture.debugElement.query(By.css('#labels-group'));
+    let editLabels = fixture.debugElement.query(By.css('#edit-labels'));
+
+    expect(editLabels).toBeNull();
+    labelsGroup.nativeElement.click();
+    fixture.detectChanges();
+    editLabels = fixture.debugElement.query(By.css('#edit-labels'));
+
+    expect(editLabels).toBeTruthy();
+  });
+  it('should open edit label menu when there are not any', () => {
+    const addLabelsBtn = fixture.debugElement.query(By.css('#add-labels'));
+    let editLabels = fixture.debugElement.query(By.css('#edit-labels'));
+
+    expect(editLabels).toBeNull();
+    addLabelsBtn.nativeElement.click();
+    fixture.detectChanges();
+    editLabels = fixture.debugElement.query(By.css('#edit-labels'));
+
+    expect(editLabels).toBeTruthy();
+  });
+  it('should close edit label menu', () => {
+    const labelsGroup = fixture.debugElement.query(By.css('#labels-group'));
+    labelsGroup.nativeElement.click();
+    fixture.detectChanges();
+    let editLabels = fixture.debugElement.query(By.css('#edit-labels'));
+
+    expect(editLabels).toBeTruthy();
+
+    const closeBtn = fixture.nativeElement.querySelector('#close-labels-edit');
+
+    closeBtn.click();
+    fixture.detectChanges();
+    editLabels = fixture.debugElement.query(By.css('#edit-labels'));
+
+    expect(editLabels).toBeFalsy();
+  });
+  it('should add or remove labels to edit', () => {
+    component.editLabels = true;
+    fixture.detectChanges();
+
+    const labels: Label[] = [
+      { id: '123', name: 'Label 1', colorVariant: 2 },
+      { id: '321', name: 'Label 2', colorVariant: 3 },
+      { id: '213', name: 'Label 3', colorVariant: 1 },
+    ];
+    service.setLabels(labels);
+    fixture.detectChanges();
+
+    const compiled = fixture.nativeElement;
+    const pills = compiled.querySelectorAll('app-pill');
+
+    expect(pills.length).toBe(3);
+    pills[0].click();
+    fixture.detectChanges();
+    expect(component.selectedLabels.length).toBe(1);
+    pills[0].click();
+    fixture.detectChanges();
+    expect(component.selectedLabels.length).toBe(0);
+  });
+  it('should emit editTaskInPlan', () => {
+    spyOn(service, 'editTaskInPlan');
+    component.editLabels = true;
+    const taskId = '123';
+    component.taskId = taskId;
+    const planId = '231';
+    component.planId = planId;
+    const selectedLabels: string[] = ['123', '321'];
+    component.selectedLabels = selectedLabels;
+    fixture.detectChanges();
+
+    const compiled = fixture.nativeElement;
+    const form = compiled.querySelector('#edit-labels-form');
+
+    form.dispatchEvent(new Event('submit'));
+    fixture.detectChanges();
+
+    expect(service.editTaskInPlan).toHaveBeenCalledTimes(1);
+    expect(service.editTaskInPlan).toHaveBeenCalledWith(planId, taskId, {
+      labelIds: selectedLabels,
     });
   });
   it('should emit deleteATaskFromPlan()', () => {
