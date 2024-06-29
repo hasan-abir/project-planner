@@ -148,17 +148,7 @@
           placeholder="Task description..."
           [(ngModel)]="newTaskDescription"
         ></textarea>
-        <div class="flex flex-wrap gap-2 mx-1 mb-3">
-          @for (label of labels$ | async; track label.id) {
-            <app-pill
-              class="cursor-pointer"
-              (click)="addOrRemoveLabel(label.id)"
-              [selected]="selectedLabels.includes(label.id)"
-              [colorVariant]="label.colorVariant"
-              >{{ label.name }}</app-pill
-            >
-          }
-        </div>
+        <app-label-group (labelClicked)="setSelectedLabels($event)" />
         <app-cta-button>SAVE</app-cta-button>
       </form>
     </div>

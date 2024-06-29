@@ -1,7 +1,12 @@
 <button
   class="text-base rounded-md w-full p-2 bg-green-300 border-[1px] border-black"
-  [ngClass]="{ 'bg-green-300': primary, 'text-xs': small }"
-  type="submit"
+  [ngClass]="{
+    'bg-green-300': primary,
+    'bg-white': !primary,
+    'text-xs': small
+  }"
+  (click)="onClick()"
+  [type]="primary ? 'submit' : 'button'"
 >
   <ng-content></ng-content>
 </button>

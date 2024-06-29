@@ -121,11 +121,9 @@ describe('EditableTitleComponent', () => {
   it('should change the textbox into title (multitext)', () => {
     component.multitext = true;
     component.textboxOpen = true;
+    component.textboxFocusout();
     fixture.detectChanges();
-    const textbox = fixture.debugElement.query(By.css('textarea'));
-    const closeTextbox = fixture.nativeElement.querySelector('#close-textarea');
 
-    closeTextbox.click();
     expect(component.textboxOpen).toBeFalse();
   });
 });

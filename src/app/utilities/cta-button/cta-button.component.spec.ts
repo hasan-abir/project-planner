@@ -54,4 +54,10 @@ describe('CtaButtonComponent', () => {
 
     expect(textContent).toBe('Button');
   });
+  it('should emit clicked', () => {
+    spyOn(component.clicked, 'emit');
+    const btn = fixture.nativeElement.querySelector('button');
+    btn.click();
+    expect(component.clicked.emit).toHaveBeenCalledTimes(1);
+  });
 });

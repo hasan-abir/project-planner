@@ -1,5 +1,5 @@
 import { NgClass } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-cta-button',
@@ -11,4 +11,9 @@ import { Component, Input } from '@angular/core';
 export class CtaButtonComponent {
   @Input() primary: boolean = true;
   @Input() small: boolean = false;
+  @Output() clicked: EventEmitter<void> = new EventEmitter();
+
+  onClick() {
+    this.clicked.emit();
+  }
 }

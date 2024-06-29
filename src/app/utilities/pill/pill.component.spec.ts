@@ -72,15 +72,23 @@ describe('PillComponent', () => {
 
     expect(el).toBeTruthy();
   });
+  it('should emit clicked()', () => {
+    spyOn(component.clicked, 'emit');
+    fixture.detectChanges();
 
-  it('should emit onDelete()', () => {
-    spyOn(component.onDelete, 'emit');
+    const el = fixture.nativeElement.querySelector('span');
+    el.click();
+
+    expect(component.clicked.emit).toHaveBeenCalledTimes(1);
+  });
+  it('should emit deleted()', () => {
+    spyOn(component.deleted, 'emit');
     component.close = true;
     fixture.detectChanges();
 
     const el = fixture.nativeElement.querySelector('#close-icon');
     el.click();
 
-    expect(component.onDelete.emit).toHaveBeenCalledTimes(1);
+    expect(component.deleted.emit).toHaveBeenCalledTimes(1);
   });
 });

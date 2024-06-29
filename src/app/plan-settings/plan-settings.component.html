@@ -67,7 +67,7 @@
   <div class="w-full flex flex-col gap-2">
     @for (label of labels$ | async; track label.id) {
       <app-pill
-        (onDelete)="onDeleteLabel(label.id)"
+        (deleted)="onDeleteLabel(label.id)"
         [colorVariant]="label.colorVariant"
         [small]="true"
         [close]="true"

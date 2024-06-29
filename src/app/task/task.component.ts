@@ -7,6 +7,7 @@ import { Observable, of } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { CtaButtonComponent } from '../utilities/cta-button/cta-button.component';
 import { FormsModule } from '@angular/forms';
+import { LabelGroupComponent } from '../label-group/label-group.component';
 
 @Component({
   selector: 'app-task',
@@ -15,6 +16,7 @@ import { FormsModule } from '@angular/forms';
     PillComponent,
     EditableTitleComponent,
     CtaButtonComponent,
+    LabelGroupComponent,
     CdkDrag,
     CdkDragHandle,
     FormsModule,
@@ -59,12 +61,8 @@ export class TaskComponent implements OnInit {
     this.service.editTaskInPlan(this.planId, this.taskId, { description });
   }
 
-  addOrRemoveLabel(id: string) {
-    if (this.selectedLabels.includes(id)) {
-      this.selectedLabels = this.selectedLabels.filter((item) => item !== id);
-    } else {
-      this.selectedLabels.push(id);
-    }
+  setSelectedLabels(labels: string[]) {
+    this.selectedLabels = labels;
   }
 
   ngOnInit() {

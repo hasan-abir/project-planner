@@ -9,27 +9,19 @@
           #formData="ngForm"
           (ngSubmit)="onEditLabels()"
         >
-          <div id="edit-labels" class="flex flex-wrap gap-2 mx-1 mb-3">
-            @for (label of globalLabels$ | async; track label.id) {
-              <app-pill
-                class="cursor-pointer"
-                [small]="true"
-                [selected]="selectedLabels.includes(label.id)"
-                [colorVariant]="label.colorVariant"
-                (click)="addOrRemoveLabel(label.id)"
-                >{{ label.name }}</app-pill
-              >
-            }
-          </div>
+          <app-label-group
+            (labelClicked)="setSelectedLabels($event)"
+            [small]="true"
+            [selectedLabels]="selectedLabels"
+          />
           <div class="flex justify-between gap-2">
-            <button
-              id="close-labels-edit"
-              type="button"
-              (click)="toggleEditLabels(false)"
-              class="text-xs rounded-md w-full p-2 bg-white border-[1px] border-black"
+            <app-cta-button
+              [primary]="false"
+              [small]="true"
+              (clicked)="toggleEditLabels(false)"
+              class="w-full"
+              >CANCEL</app-cta-button
             >
-              CANCEL
-            </button>
             <app-cta-button [small]="true" class="w-full">SAVE</app-cta-button>
           </div>
         </form>

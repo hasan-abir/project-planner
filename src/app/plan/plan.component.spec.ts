@@ -111,24 +111,10 @@ describe('PlanComponent', () => {
     expect(service.deletePlan).toHaveBeenCalledWith(planId);
   });
 
-  it('should add or remove labels', () => {
-    const labels: Label[] = [
-      { id: '123', name: 'Label 1', colorVariant: 2 },
-      { id: '321', name: 'Label 2', colorVariant: 3 },
-      { id: '213', name: 'Label 3', colorVariant: 1 },
-    ];
-    service.setLabels(labels);
+  it('should set selectedLabels', () => {
+    const labels: string[] = ['123', '231', '321'];
+    component.setSelectedLabels(labels);
     fixture.detectChanges();
-
-    const compiled = fixture.nativeElement;
-    const pills = compiled.querySelectorAll('app-pill');
-
-    expect(pills.length).toBe(3);
-    pills[0].click();
-    fixture.detectChanges();
-    expect(component.selectedLabels.length).toBe(1);
-    pills[0].click();
-    fixture.detectChanges();
-    expect(component.selectedLabels.length).toBe(0);
+    expect(component.selectedLabels).toBe(labels);
   });
 });

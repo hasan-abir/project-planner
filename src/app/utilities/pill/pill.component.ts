@@ -13,11 +13,16 @@ export class PillComponent {
   @Input() selected: boolean = false;
   @Input() small: boolean = false;
   @Input() close: boolean = false;
-  @Output() onDelete: EventEmitter<void> = new EventEmitter<void>();
+  @Output() clicked: EventEmitter<void> = new EventEmitter<void>();
+  @Output() deleted: EventEmitter<void> = new EventEmitter<void>();
 
   constructor() {}
 
+  onPillClick() {
+    this.clicked.emit();
+  }
+
   onCloseClick() {
-    this.onDelete.emit();
+    this.deleted.emit();
   }
 }

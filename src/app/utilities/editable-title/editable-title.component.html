@@ -11,14 +11,13 @@
         [(ngModel)]="textContent"
       ></textarea>
       <div class="flex justify-between gap-2">
-        <button
-          id="close-textarea"
-          type="button"
-          (click)="textboxFocusout()"
-          class="text-xs rounded-md w-full p-2 bg-white border-[1px] border-black"
+        <app-cta-button
+          (clicked)="textboxFocusout()"
+          [primary]="false"
+          [small]="true"
+          class="w-full"
+          >CANCEL</app-cta-button
         >
-          CANCEL
-        </button>
         <app-cta-button [small]="true" class="w-full">SAVE</app-cta-button>
       </div>
     } @else {

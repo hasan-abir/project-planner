@@ -25,6 +25,7 @@ import {
 import { FormsModule } from '@angular/forms';
 import { Label, Task, TodosService } from '../todos.service';
 import { Observable, of } from 'rxjs';
+import { LabelGroupComponent } from '../label-group/label-group.component';
 
 export interface NewTaskValue {
   title: string;
@@ -40,6 +41,7 @@ export interface NewTaskValue {
     CardComponent,
     EditableTitleComponent,
     CtaButtonComponent,
+    LabelGroupComponent,
     PillComponent,
     TaskComponent,
     CdkDropList,
@@ -115,12 +117,8 @@ export class PlanComponent implements OnInit {
     this.service.editPlan(this.planId, { title });
   }
 
-  addOrRemoveLabel(id: string) {
-    if (this.selectedLabels.includes(id)) {
-      this.selectedLabels = this.selectedLabels.filter((item) => item !== id);
-    } else {
-      this.selectedLabels.push(id);
-    }
+  setSelectedLabels(labels: string[]) {
+    this.selectedLabels = labels;
   }
 
   drop(event: CdkDragDrop<Task[]>) {
