@@ -1,7 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PlanComponent } from './plan.component';
-import { Label, TodosService } from '../todos.service';
+import { Label, Plan, TodosService } from '../todos.service';
+import { By } from '@angular/platform-browser';
 
 describe('PlanComponent', () => {
   let component: PlanComponent;
@@ -53,9 +54,9 @@ describe('PlanComponent', () => {
     const descriptionInput = compiled.querySelector('#task-description');
     const form = compiled.querySelector('form');
     const title = 'New task';
-    titleInput.value = 'New task';
+    titleInput.value = title;
     const description = 'Lorem ipsum';
-    descriptionInput.value = 'Lorem ipsum';
+    descriptionInput.value = description;
 
     titleInput.dispatchEvent(new Event('input'));
     descriptionInput.dispatchEvent(new Event('input'));

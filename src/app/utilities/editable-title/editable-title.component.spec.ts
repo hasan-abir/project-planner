@@ -41,7 +41,9 @@ describe('EditableTitleComponent', () => {
     const title = fixture.nativeElement.querySelector('h2');
 
     title.click();
-    expect(component.textboxOpen).toBeTrue();
+    fixture.detectChanges();
+    const textbox = fixture.debugElement.query(By.css('input'));
+    expect(textbox).toBeTruthy();
   });
   it('should emit afterEdit', () => {
     spyOn(component.afterEdit, 'emit');
@@ -58,7 +60,8 @@ describe('EditableTitleComponent', () => {
     form.dispatchEvent(new Event('submit'));
     fixture.detectChanges();
     expect(component.afterEdit.emit).toHaveBeenCalledTimes(1);
-    expect(component.textboxOpen).toBe(false);
+    const textbox = fixture.debugElement.query(By.css('input'));
+    expect(textbox).toBeNull();
   });
   it('should change the textbox into title', () => {
     component.textboxOpen = true;
@@ -66,7 +69,9 @@ describe('EditableTitleComponent', () => {
     const textbox = fixture.debugElement.query(By.css('input'));
 
     textbox.triggerEventHandler('focusout', null);
-    expect(component.textboxOpen).toBeFalse();
+    fixture.detectChanges();
+    const title = fixture.debugElement.query(By.css('h2'));
+    expect(title).toBeTruthy();
   });
 
   it('should render the title with the textContent (multitext)', () => {
@@ -84,7 +89,7 @@ describe('EditableTitleComponent', () => {
     component.multitext = true;
     fixture.detectChanges();
 
-    const textbox = fixture.nativeElement.querySelector('textarea');
+    const textbox = fixture.debugElement.query(By.css('textarea'));
 
     expect(textbox).toBeTruthy();
   });
@@ -95,7 +100,10 @@ describe('EditableTitleComponent', () => {
     const title = fixture.nativeElement.querySelector('p');
 
     title.click();
-    expect(component.textboxOpen).toBeTrue();
+    fixture.detectChanges();
+    const textbox = fixture.debugElement.query(By.css('textarea'));
+
+    expect(textbox).toBeTruthy();
   });
   it('should emit afterEdit (multitext)', () => {
     spyOn(component.afterEdit, 'emit');
@@ -123,7 +131,8 @@ describe('EditableTitleComponent', () => {
     component.textboxOpen = true;
     component.textboxFocusout();
     fixture.detectChanges();
+    const title = fixture.debugElement.query(By.css('p'));
 
-    expect(component.textboxOpen).toBeFalse();
+    expect(title).toBeTruthy();
   });
 });

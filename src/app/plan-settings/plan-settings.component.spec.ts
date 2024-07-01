@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PlanSettingsComponent } from './plan-settings.component';
 import { Label, TodosService } from '../todos.service';
+import { By } from '@angular/platform-browser';
 
 describe('PlanSettingsComponent', () => {
   let component: PlanSettingsComponent;
@@ -31,6 +32,7 @@ describe('PlanSettingsComponent', () => {
   });
   it('should call the service addNewLabel on form submit', () => {
     spyOn(service, 'addNewLabel');
+    service.setLabels([]);
     const compiled = fixture.nativeElement;
     compiled.querySelector('#add-plan-btn').click();
     const nameInput = compiled.querySelector('#label-name');
@@ -45,6 +47,24 @@ describe('PlanSettingsComponent', () => {
 
     expect(service.addNewLabel).toHaveBeenCalledTimes(1);
     expect(service.addNewLabel).toHaveBeenCalledWith(name, 4);
+  });
+  it('should add a new pill on addNewLabel', () => {
+    service.setLabels([]);
+    const compiled = fixture.nativeElement;
+    compiled.querySelector('#add-plan-btn').click();
+    const nameInput = compiled.querySelector('#label-name');
+    const form = compiled.querySelector('form');
+
+    const name = 'Task';
+    nameInput.value = name;
+    nameInput.dispatchEvent(new Event('input'));
+
+    form.dispatchEvent(new Event('submit'));
+    fixture.detectChanges();
+
+    const pills = fixture.debugElement.queryAll(By.css('app-pill'));
+    expect(pills.length).toBe(1);
+    expect(pills[pills.length - 1].nativeElement.textContent).toBe(name);
   });
   it('should not call the service addNewLabel with empty input', () => {
     spyOn(service, 'addNewLabel');
@@ -88,6 +108,32 @@ describe('PlanSettingsComponent', () => {
 
     expect(service.deleteLabel).toHaveBeenCalledTimes(1);
     expect(service.deleteLabel).toHaveBeenCalledWith(labels[1].id);
+  });
+  it('should remove the pill on deleteLabel', () => {
+    const labels: Label[] = [
+      {
+        id: '123',
+        name: 'Label 1',
+        colorVariant: 3,
+      },
+      {
+        id: '321',
+        name: 'Label 2',
+        colorVariant: 2,
+      },
+    ];
+    service.setLabels(labels);
+    fixture.detectChanges();
+    let pills = fixture.debugElement.queryAll(By.css('app-pill'));
+
+    expect(pills.length).toBe(labels.length);
+    component.onDeleteLabel(labels[1].id);
+    fixture.detectChanges();
+    pills = fixture.debugElement.queryAll(By.css('app-pill'));
+    expect(pills.length).toBe(1);
+    expect(pills[pills.length - 1].nativeElement.textContent).toBe(
+      labels[0].name,
+    );
   });
   it('should change colorVariant', () => {
     const compiled = fixture.nativeElement;
