@@ -10,6 +10,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 })
 export class CtaButtonComponent {
   @Input() primary: boolean = true;
+  @Input() error: boolean = false;
   @Input() small: boolean = false;
   @Output() clicked: EventEmitter<void> = new EventEmitter();
 

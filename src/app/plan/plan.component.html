@@ -45,7 +45,11 @@
         [textContent]="headerTitle"
         (afterEdit)="onEdit($event)"
       />
-      <button id="delete-plan-btn" class="w-4" (click)="onDelete()">
+      <button
+        id="delete-plan-btn"
+        class="w-4"
+        (click)="toggleConfirmDelete(true)"
+      >
         <svg
           class="w-full"
           width="18"
@@ -154,3 +158,28 @@
     </div>
   </app-card>
 </article>
+@if (confirmDelete) {
+  <app-modal (closeClicked)="toggleConfirmDelete(false)">
+    <p class="mb-4">
+      This will delete the list "{{ headerTitle }}" and its tasks. Are you sure
+      about that?
+    </p>
+    <div class="flex gap-4">
+      <app-cta-button
+        [small]="true"
+        [primary]="false"
+        class="w-full"
+        (clicked)="toggleConfirmDelete(false)"
+        >NO</app-cta-button
+      >
+      <app-cta-button
+        [small]="true"
+        [error]="true"
+        [primary]="false"
+        class="w-full"
+        (clicked)="onDelete()"
+        >YES</app-cta-button
+      >
+    </div>
+  </app-modal>
+}

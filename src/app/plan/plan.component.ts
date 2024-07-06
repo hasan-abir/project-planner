@@ -26,6 +26,7 @@ import { FormsModule } from '@angular/forms';
 import { Label, Task, TodosService } from '../todos.service';
 import { Observable, of } from 'rxjs';
 import { LabelGroupComponent } from '../label-group/label-group.component';
+import { ModalComponent } from '../modal/modal.component';
 
 export interface NewTaskValue {
   title: string;
@@ -44,6 +45,7 @@ export interface NewTaskValue {
     LabelGroupComponent,
     PillComponent,
     TaskComponent,
+    ModalComponent,
     CdkDropList,
     CdkDrag,
     CdkDragHandle,
@@ -66,6 +68,7 @@ export class PlanComponent implements OnInit {
   newTaskDescription: string = '';
   labels$: Observable<Label[]> = of([]);
   selectedLabels: string[] = [];
+  confirmDelete: boolean = false;
 
   addTaskOpened: boolean = false;
 
@@ -119,6 +122,10 @@ export class PlanComponent implements OnInit {
 
   setSelectedLabels(labels: string[]) {
     this.selectedLabels = labels;
+  }
+
+  toggleConfirmDelete(state: boolean) {
+    this.confirmDelete = state;
   }
 
   drop(event: CdkDragDrop<Task[]>) {

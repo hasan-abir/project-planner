@@ -97,16 +97,37 @@ describe('PlanComponent', () => {
     expect(service.editPlan).toHaveBeenCalledTimes(1);
     expect(service.editPlan).toHaveBeenCalledWith(planId, { title });
   });
+  it('should open delete plan modal', () => {
+    const planId = '123';
+    component.planId = planId;
+    fixture.detectChanges();
+
+    const openModalBtn =
+      fixture.nativeElement.querySelector('#delete-plan-btn');
+
+    openModalBtn.click();
+
+    fixture.detectChanges();
+
+    let modal = fixture.debugElement.query(By.css('app-modal'));
+
+    expect(modal).toBeTruthy();
+
+    component.toggleConfirmDelete(false);
+
+    fixture.detectChanges();
+
+    modal = fixture.debugElement.query(By.css('app-modal'));
+
+    expect(modal).toBeNull();
+  });
   it('should emit deletePlan()', () => {
     const planId = '123';
     component.planId = planId;
     fixture.detectChanges();
     spyOn(service, 'deletePlan');
 
-    const compiled = fixture.nativeElement;
-    const btn = compiled.querySelector('#delete-plan-btn');
-
-    btn.click();
+    component.onDelete();
 
     expect(service.deletePlan).toHaveBeenCalledTimes(1);
     expect(service.deletePlan).toHaveBeenCalledWith(planId);
