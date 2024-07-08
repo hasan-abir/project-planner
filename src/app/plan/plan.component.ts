@@ -129,19 +129,24 @@ export class PlanComponent implements OnInit {
   }
 
   drop(event: CdkDragDrop<Task[]>) {
+    const plans = this.service.getPlans();
+    const planIndex = plans.findIndex((item) => item.id === this.planId);
+
     if (event.previousContainer === event.container) {
       moveItemInArray(
-        event.container.data,
+        plans[planIndex].tasks,
         event.previousIndex,
         event.currentIndex,
       );
     } else {
       transferArrayItem(
         event.previousContainer.data,
-        event.container.data,
+        plans[planIndex].tasks,
         event.previousIndex,
         event.currentIndex,
       );
     }
+
+    this.service.setPlans(plans);
   }
 }

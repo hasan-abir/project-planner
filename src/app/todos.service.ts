@@ -37,62 +37,6 @@ export class TodosService {
 
   public plans$: Observable<Plan[]> = this.plansSubject.asObservable();
 
-  constructor() {
-    this.setLabels([
-      {
-        id: uuidv4(),
-        name: 'Priority 1',
-        colorVariant: 4,
-      },
-      {
-        id: uuidv4(),
-        name: 'Priority 2',
-        colorVariant: 3,
-      },
-      {
-        id: uuidv4(),
-        name: 'Priority 3',
-        colorVariant: 2,
-      },
-      {
-        id: uuidv4(),
-        name: 'Priority 4',
-        colorVariant: 1,
-      },
-    ]);
-
-    this.setPlans([
-      {
-        id: uuidv4(),
-        title: 'Todo',
-        tasks: [
-          {
-            id: uuidv4(),
-            title: 'I just came',
-            description: '',
-            labels: [{ ...this.getLabels()[0] }],
-          },
-          {
-            id: uuidv4(),
-            title: 'Hey Mama',
-            description:
-              "I know I act a fool. If I had gone back to school, I wouldn't be no Ye",
-            labels: [{ ...this.getLabels()[1] }, { ...this.getLabels()[2] }],
-          },
-          {
-            id: uuidv4(),
-            title: "Can't tell me",
-            description: "I've always been this way. Can't tell me better",
-            labels: [],
-          },
-        ],
-      },
-      { id: uuidv4(), title: 'In Progress', tasks: [] },
-      { id: uuidv4(), title: 'Done', tasks: [] },
-      { id: uuidv4(), title: 'Later', tasks: [] },
-    ]);
-  }
-
   addANewPlan() {
     const updatedPlans = this.getPlans();
     updatedPlans.unshift({ id: uuidv4(), title: 'New plan', tasks: [] });
@@ -234,6 +178,63 @@ export class TodosService {
     this.setPlans(updatedPlans);
   }
 
+  setDummyPlans() {
+    this.setPlans([
+      {
+        id: uuidv4(),
+        title: 'Todo',
+        tasks: [
+          {
+            id: uuidv4(),
+            title: 'Example Todo without a description',
+            description: '',
+            labels: [{ ...this.getLabels()[0] }],
+          },
+          {
+            id: uuidv4(),
+            title: 'Example Todo complete',
+            description: 'Lorem ipsum.',
+            labels: [{ ...this.getLabels()[1] }, { ...this.getLabels()[2] }],
+          },
+          {
+            id: uuidv4(),
+            title: 'Example Todo without labels',
+            description: 'Lorem Ipsum',
+            labels: [],
+          },
+        ],
+      },
+      { id: uuidv4(), title: 'In Progress', tasks: [] },
+      { id: uuidv4(), title: 'Done', tasks: [] },
+      { id: uuidv4(), title: 'Later', tasks: [] },
+    ]);
+  }
+
+  setDummyLabels() {
+    this.setLabels([
+      {
+        id: uuidv4(),
+        name: 'Priority 1',
+        colorVariant: 4,
+      },
+      {
+        id: uuidv4(),
+        name: 'Priority 2',
+        colorVariant: 3,
+      },
+      {
+        id: uuidv4(),
+        name: 'Priority 3',
+        colorVariant: 2,
+      },
+      {
+        id: uuidv4(),
+        name: 'Priority 4',
+        colorVariant: 1,
+      },
+    ]);
+  }
+
   setPlans(plans: Plan[]) {
     this.plansSubject.next(plans);
   }
@@ -241,8 +242,8 @@ export class TodosService {
     return this.plansSubject.value;
   }
 
-  setLabels(label: Label[]) {
-    this.labelsSubject.next(label);
+  setLabels(labels: Label[]) {
+    this.labelsSubject.next(labels);
   }
   getLabels(): Label[] {
     return this.labelsSubject.value;

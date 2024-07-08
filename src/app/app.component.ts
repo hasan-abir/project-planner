@@ -11,7 +11,7 @@ import { RouterOutlet } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { PlanSettingsComponent } from './plan-settings/plan-settings.component';
 import { PlanComponent } from './plan/plan.component';
-import { Plan, TodosService } from './todos.service';
+import { Label, Plan, TodosService } from './todos.service';
 
 @Component({
   selector: 'app-root',
@@ -36,7 +36,34 @@ export class AppComponent implements OnInit {
   constructor(private service: TodosService) {}
 
   ngOnInit(): void {
+    this.service.setDummyLabels();
+    const storedPlans: Plan[] = JSON.parse(
+      localStorage.getItem('plansArr') || '[]',
+    );
+    const storedLabels: Label[] = JSON.parse(
+      localStorage.getItem('labelsArr') || '[]',
+    );
+
+    if (storedLabels.length > 0) {
+      this.service.setLabels(storedLabels);
+    } else {
+      this.service.setDummyLabels();
+    }
+
     this.plans$ = this.service.plans$;
+
+    if (storedPlans.length > 0) {
+      this.service.setPlans(storedPlans);
+    } else {
+      this.service.setDummyPlans();
+    }
+
+    this.service.labels$.subscribe((updatedLabels) => {
+      localStorage.setItem('labelsArr', JSON.stringify(updatedLabels));
+    });
+    this.service.plans$.subscribe((updatedPlans) => {
+      localStorage.setItem('plansArr', JSON.stringify(updatedPlans));
+    });
   }
 
   drop(event: CdkDragDrop<string[]>) {
