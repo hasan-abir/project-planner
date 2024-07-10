@@ -8,8 +8,7 @@
     "format": "prettier --write src/",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:project_planner": "node dist/project_planner/server/server.mjs",
-    "prepare": "husky"
+    "serve:ssr:project_planner": "node dist/project_planner/server/server.mjs"
   },
   "private": true,
   "dependencies": {
