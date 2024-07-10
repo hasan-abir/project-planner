@@ -6,22 +6,25 @@
       Use this to keep track of tasks&#44; or however way you want to use it
     </p>
   </section>
-
-  <section
-    cdkDropList
-    cdkDropListOrientation="horizontal"
-    (cdkDropListDropped)="drop($event)"
-    cdkDropListGroup
-    class="panels flex w-max px-4 sm:px-8 mx-auto gap-4 pb-8"
-  >
-    <app-plan-settings />
-    @for (plan of plans$ | async; track plan.id) {
-      <app-plan
-        class="max-w-[360px] min-w-[280px] flex-1"
-        [planId]="plan.id"
-        [headerTitle]="plan.title"
-        [tasks]="plan.tasks"
-      />
-    }
-  </section>
+  @if (loadingData) {
+    <p class="text-center">Loading...</p>
+  } @else {
+    <section
+      cdkDropList
+      cdkDropListOrientation="horizontal"
+      (cdkDropListDropped)="drop($event)"
+      cdkDropListGroup
+      class="panels flex w-max px-4 sm:px-8 mx-auto gap-4 pb-8"
+    >
+      <app-plan-settings />
+      @for (plan of plans$ | async; track plan.id) {
+        <app-plan
+          class="max-w-[360px] min-w-[280px] flex-1"
+          [planId]="plan.id"
+          [headerTitle]="plan.title"
+          [tasks]="plan.tasks"
+        />
+      }
+    </section>
+  }
 </div>

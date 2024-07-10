@@ -32,6 +32,7 @@ export class AppComponent implements OnInit {
   title = 'project_planner';
   name = 'Hasan Abir';
   plans$: Observable<Plan[]> = of([]);
+  loadingData: boolean = true;
 
   constructor(private service: TodosService) {}
 
@@ -57,6 +58,8 @@ export class AppComponent implements OnInit {
       } else {
         this.service.setDummyPlans();
       }
+
+      this.loadingData = false;
 
       this.service.labels$.subscribe((updatedLabels) => {
         localStorage.setItem('labelsArr', JSON.stringify(updatedLabels));
